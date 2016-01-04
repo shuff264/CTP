@@ -20,7 +20,7 @@ public class VehicleSpawn : MonoBehaviour {
 	
 		randomValue = Random.Range (0, 100);		
 
-		if (randomValue < 50) {
+		if (randomValue < 1) {
 		
 			Instantiate(car, gameObject.transform.position, Quaternion.identity);
 		

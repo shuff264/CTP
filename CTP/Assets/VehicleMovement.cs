@@ -5,20 +5,25 @@ public class VehicleMovement : MonoBehaviour {
 
 	Vector3 startPosition;
 	public Vector3 endPosition;
-	float speed = 10.0f;
+	float speed = 1.0f;
 
 	float startTime;
 	float journeyLength;
 
+	public RoadFinder roadFinder;
+
 	// Use this for initialization
 	void Start () {
 
-		float randX = Random.Range (0, 100);
-		float randY = Random.Range (0, 100);
+		roadFinder = GameObject.Find ("Roads").GetComponent<RoadFinder> ();
+		
+
+		int randX = Random.Range (0, roadFinder.roadPieces.Length - 1);
+//		float randY = Random.Range (0, 100);
 
 		startTime = Time.time;
 		startPosition = gameObject.transform.position;
-		endPosition = new Vector3 (randX, 0, randY);
+		endPosition = roadFinder.roadPieces [randX].transform.position;
 		journeyLength = Vector3.Distance (startPosition, endPosition);
 	
 	}
