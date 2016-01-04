@@ -5,7 +5,7 @@ public class VehicleMovement : MonoBehaviour {
 
 	Vector3 startPosition;
 	public Vector3 endPosition;
-	float speed = 1.0f;
+	float speed = 10.0f;
 
 	float startTime;
 	float journeyLength;
@@ -29,6 +29,13 @@ public class VehicleMovement : MonoBehaviour {
 		float distCovered = (Time.time - startTime) * speed;
 		float fracJourney = distCovered / journeyLength;
 		gameObject.transform.position = Vector3.Lerp (startPosition, endPosition, fracJourney);
+
+
+		if (gameObject.transform.position == endPosition) {
+
+			DestroyObject(gameObject);
+
+		}
 	
 	}
 }
