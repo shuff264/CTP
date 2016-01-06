@@ -18,11 +18,11 @@ public class VehicleSpawn : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		randomValue = Random.Range (0, 100);		
+		randomValue = Random.Range (0, 1000);		
 
 		if (randomValue < 1) {
 		
-			Instantiate(car, gameObject.transform.position, Quaternion.identity);
+			Instantiate(car, new Vector3(gameObject.transform.position.x, 1, gameObject.transform.position.z), Quaternion.identity);
 		
 		}
 

@@ -15,7 +15,7 @@ public class VehicleMovement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		roadFinder = GameObject.Find ("Roads").GetComponent<RoadFinder> ();
+		roadFinder = GameObject.Find ("Controller").GetComponent<RoadFinder> ();
 		
 
 		int randX = Random.Range (0, roadFinder.roadPieces.Length - 1);
@@ -23,7 +23,7 @@ public class VehicleMovement : MonoBehaviour {
 
 		startTime = Time.time;
 		startPosition = gameObject.transform.position;
-		endPosition = roadFinder.roadPieces [randX].transform.position;
+		endPosition =	new Vector3(roadFinder.roadPieces[randX].transform.position.x, 1, roadFinder.roadPieces [randX].transform.position.z);
 		journeyLength = Vector3.Distance (startPosition, endPosition);
 	
 	}

@@ -7,15 +7,8 @@ public class RoadFinder : MonoBehaviour {
 	public GameObject[] roadPieces;
 
 	// Use this for initialization
-	void Start () {
-	
-		roadPieces = GameObject.FindGameObjectsWithTag ("road");
-		
-	}
-	
-	// Update is called once per frame
 	void Update () {
-
-	
+		roadPieces = GameObject.FindGameObjectsWithTag ("road");
 	}
+
 }
