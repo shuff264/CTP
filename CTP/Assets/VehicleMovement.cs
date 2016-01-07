@@ -23,7 +23,7 @@ public class VehicleMovement : MonoBehaviour {
 
 		startTime = Time.time;
 		startPosition = gameObject.transform.position;
-		endPosition =	new Vector3(roadFinder.roadPieces[randX].transform.position.x, 1, roadFinder.roadPieces [randX].transform.position.z);
+		endPosition = new Vector3 (roadFinder.roadPieces [randX].transform.position.x, 1, roadFinder.roadPieces [randX].transform.position.z);
 		journeyLength = Vector3.Distance (startPosition, endPosition);
 	
 	}

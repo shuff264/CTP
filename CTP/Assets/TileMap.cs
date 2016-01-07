@@ -24,9 +24,23 @@ public class TileMap : MonoBehaviour {
 			for (int y = 0; y < mapSizeY; y++) {
 				TileType tt = tileTypes[tiles[x,y]];
 
-				Instantiate(tt.tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
+				GameObject tileTemp = (GameObject) Instantiate(tt.tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
+
+				RoadPlacement rp = tileTemp.GetComponent<RoadPlacement>();
+				rp.tileX = x;
+				rp.tileY = y;
+				rp.map = this;
+				
 			}
 		}
+	}
+
+	public void PlaceRoad(int x, int y){
+
+		Debug.Log ("X = " + x);
+		Debug.Log ("Y = " + y);
+		
+
 	}
 
 }
