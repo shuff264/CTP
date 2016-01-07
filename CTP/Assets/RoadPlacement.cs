@@ -7,9 +7,13 @@ public class RoadPlacement : MonoBehaviour {
 	public int tileY;
 	public TileMap map;
 
-	void OnMouseDown(){
+	void OnMouseOver(){
 
-		map.PlaceRoad (tileX, tileY);
-
+		if(Input.GetMouseButtonDown(0)){
+			map.PlaceRoad (tileX, tileY);
+		}
+		else if(Input.GetMouseButtonDown(1)){
+			map.PlaceGrass(tileX, tileY);
+		}
 	}
 }
