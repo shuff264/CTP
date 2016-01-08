@@ -44,6 +44,11 @@ public class TileMap : MonoBehaviour {
 		Destroy (tilesGrid [x, y]);
 		tilesGrid [x, y] = (GameObject)Instantiate (tt.tilePrefab, new Vector3 (x, 0, y), Quaternion.identity);
 
+		RoadPlacement rp = tilesGrid[x,y].GetComponent<RoadPlacement>();
+		rp.tileX = x;
+		rp.tileY = y;
+		rp.map = this;
+
 	}
 	
 	public void PlaceGrass(int x, int y){
@@ -52,6 +57,11 @@ public class TileMap : MonoBehaviour {
 		TileType tt = tileTypes[tiles[x,y]];
 		Destroy (tilesGrid [x, y]);
 		tilesGrid [x, y] = (GameObject)Instantiate (tt.tilePrefab, new Vector3 (x, 0, y), Quaternion.identity);
+
+		RoadPlacement rp = tilesGrid[x,y].GetComponent<RoadPlacement>();
+		rp.tileX = x;
+		rp.tileY = y;
+		rp.map = this;
 
 		
 	}
