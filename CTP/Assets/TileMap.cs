@@ -8,8 +8,8 @@ public class TileMap : MonoBehaviour {
 	int[,] tiles;
 	GameObject[,] tilesGrid;
 
-	int mapSizeX = 10;
-	int mapSizeY = 10;
+	int mapSizeX = 25;
+	int mapSizeY = 25;
 
 	void Start() {
 
@@ -36,6 +36,8 @@ public class TileMap : MonoBehaviour {
 				
 			}
 		}
+
+		Debug.Log (tiles [1, 1]);
 	}
 
 	public void PlaceRoad(int x, int y){
