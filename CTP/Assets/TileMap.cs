@@ -8,8 +8,8 @@ public class TileMap : MonoBehaviour {
 	int[,] tiles;
 	GameObject[,] tilesGrid;
 
-	int mapSizeX = 25;
-	int mapSizeY = 25;
+	public int mapSizeX = 25;
+	public int mapSizeY = 25;
 
 	void Start() {
 
@@ -41,8 +41,6 @@ public class TileMap : MonoBehaviour {
 				
 			}
 		}
-
-
 
 	}
 
@@ -79,6 +77,12 @@ public class TileMap : MonoBehaviour {
 		td.tileX = x;
 		td.tileY = y;
 		td.map = this;
+	}
+
+	public GameObject TileReturn(int x, int y){
+
+		return tilesGrid[x,y];
+
 	}
 
 	void Update(){
