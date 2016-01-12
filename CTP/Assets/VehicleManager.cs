@@ -3,16 +3,16 @@ using System.Collections;
 
 public class VehicleManager : MonoBehaviour {
 
-	Vector3 startPosition;
-	public Vector3 endPosition;
+	Vector3 startPosition; //Where the vehicle starts
+	Vector3 currentPosition; //The intermidiary positon it is currently moving to
+	public Vector3 endPosition; //The end goal
 	float speed = 1.0f;
-	
-	float startTime;
-	float journeyLength;
-	
+		
 	public RoadFinder roadFinder;
 
 	public TileMap map;
+
+	GameObject currentTile;
 	
 	// Use this for initialization
 	void Start () {
@@ -23,23 +23,22 @@ public class VehicleManager : MonoBehaviour {
 		
 		int randX = Random.Range (0, map.mapSizeX - 1);
 		int randY = Random.Range (0, map.mapSizeY - 1);
-		
-		startTime = Time.time;
+	
 		startPosition = gameObject.transform.position;
 		endPosition = map.TileReturn(randX, randY).transform.position;
 		endPosition.y++;
-		journeyLength = Vector3.Distance (startPosition, endPosition);
+
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-		float distCovered = (Time.time - startTime) * speed;
-		float fracJourney = distCovered / journeyLength;
-		gameObject.transform.position = Vector3.Lerp (startPosition, endPosition, fracJourney);
-		
-		
+
+		//Check four options on tile
+		//choose best
+		//set it as currentPosition
+		//Repeat till at goal
+
 		if (gameObject.transform.position == endPosition) {
 			
 			DestroyObject(gameObject);
