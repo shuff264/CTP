@@ -68,4 +68,43 @@ public class TileMap : MonoBehaviour {
 		
 	}
 
+	void Update(){
+
+		//SWITCHES ALL ROADS AND GRASS AROUND
+		//JUST HERE TO TEST SOME STUFF
+		if(Input.GetKeyDown("return")){
+
+			for (int x = 0; x < mapSizeX; x++) {
+				for (int y = 0; y < mapSizeY; y++) {
+
+					if(tiles[x,y] == 0){
+						tiles [x, y] = 1;
+						TileType tt = tileTypes[tiles[x,y]];
+						Destroy (tilesGrid [x, y]);
+						tilesGrid [x, y] = (GameObject)Instantiate (tt.tilePrefab, new Vector3 (x, 0, y), Quaternion.identity);
+						
+						RoadPlacement rp = tilesGrid[x,y].GetComponent<RoadPlacement>();
+						rp.tileX = x;
+						rp.tileY = y;
+						rp.map = this;
+					}
+					else if(tiles[x,y] == 1){
+						tiles [x, y] = 0;
+						TileType tt = tileTypes[tiles[x,y]];
+						Destroy (tilesGrid [x, y]);
+						tilesGrid [x, y] = (GameObject)Instantiate (tt.tilePrefab, new Vector3 (x, 0, y), Quaternion.identity);
+						
+						RoadPlacement rp = tilesGrid[x,y].GetComponent<RoadPlacement>();
+						rp.tileX = x;
+						rp.tileY = y;
+						rp.map = this;
+					}						
+					
+				}
+			}
+
+		}
+
+	}
+
 }
