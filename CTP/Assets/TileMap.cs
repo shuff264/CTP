@@ -8,8 +8,8 @@ public class TileMap : MonoBehaviour {
 	int[,] tiles;
 	GameObject[,] tilesGrid;
 
-	int mapSizeX = 25;
-	int mapSizeY = 25;
+	int mapSizeX = 3;
+	int mapSizeY = 3;
 
 	void Start() {
 
@@ -37,16 +37,13 @@ public class TileMap : MonoBehaviour {
 				rp.tileX = x;
 				rp.tileY = y;
 				rp.map = this;
-				//Setting variables for the tile data script
-				TileData td = tilesGrid[x,y].GetComponent<TileData>();
-				td.tileX = x;
-				td.tileY = y;
-				td.map = this;
+
 				
 			}
 		}
 
-		Debug.Log (tiles [1, 1]);
+
+
 	}
 
 	public void PlaceRoad(int x, int y){
@@ -85,6 +82,32 @@ public class TileMap : MonoBehaviour {
 	}
 
 	void Update(){
+
+		for (int x = 0; x < mapSizeX; x++) {
+			for (int y = 0; y < mapSizeY; y++) {
+				TileType tt = tileTypes[tiles[x,y]];
+				
+				//Setting variables for the tile data script
+				TileData td = tilesGrid[x,y].GetComponent<TileData>();
+				td.tileX = x;
+				td.tileY = y;
+				if(y < mapSizeY - 1){
+					td.tileNorthType =  tiles[x,y+1];
+				}
+				if(y > 0){
+					td.tileSouthType = tiles[x,y-1];
+				}
+				if(x < mapSizeX - 1){
+					td.tileEastType = tiles[x+1,y];
+				}
+				if(x > 0){
+					td.tileWestType = tiles[x-1,y];
+				}
+				td.map = this;
+				
+			}
+			
+		}
 
 		//SWITCHES ALL ROADS AND GRASS AROUND
 		//JUST HERE TO TEST SOME STUFF
