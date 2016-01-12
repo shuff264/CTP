@@ -72,6 +72,7 @@ public class TileMap : MonoBehaviour {
 
 		//SWITCHES ALL ROADS AND GRASS AROUND
 		//JUST HERE TO TEST SOME STUFF
+		//PROVES THAT I CAN CHECK THE TILE TYPE AND MAKE A DECISION BASED ON IT
 		if(Input.GetKeyDown("return")){
 
 			for (int x = 0; x < mapSizeX; x++) {
