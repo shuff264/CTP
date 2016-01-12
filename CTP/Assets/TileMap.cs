@@ -13,26 +13,35 @@ public class TileMap : MonoBehaviour {
 
 	void Start() {
 
+		//Creating a 2D array for the map
 		tiles = new int[mapSizeX, mapSizeY];
 		tilesGrid = new GameObject[mapSizeX, mapSizeY];
 		
-
+		//Setting the tile type of all tiles
+		//0 = GRASS
+		//1 = ROAD
 		for(int x = 0; x < mapSizeX; x++){
 			for(int y = 0; y < mapSizeY; y++){
 				tiles[x,y] = 0;
 			}
 		}
 
+		//Create the map
 		for (int x = 0; x < mapSizeX; x++) {
 			for (int y = 0; y < mapSizeY; y++) {
 				TileType tt = tileTypes[tiles[x,y]];
 
 				tilesGrid[x,y] = (GameObject) Instantiate(tt.tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
-
+				//Setting variables for the road placement script
 				RoadPlacement rp = tilesGrid[x,y].GetComponent<RoadPlacement>();
 				rp.tileX = x;
 				rp.tileY = y;
 				rp.map = this;
+				//Setting variables for the tile data script
+				TileData td = tilesGrid[x,y].GetComponent<TileData>();
+				td.tileX = x;
+				td.tileY = y;
+				td.map = this;
 				
 			}
 		}
@@ -51,6 +60,10 @@ public class TileMap : MonoBehaviour {
 		rp.tileY = y;
 		rp.map = this;
 
+		TileData td = tilesGrid[x,y].GetComponent<TileData>();
+		td.tileX = x;
+		td.tileY = y;
+		td.map = this;
 	}
 	
 	public void PlaceGrass(int x, int y){
@@ -65,7 +78,10 @@ public class TileMap : MonoBehaviour {
 		rp.tileY = y;
 		rp.map = this;
 
-		
+		TileData td = tilesGrid[x,y].GetComponent<TileData>();
+		td.tileX = x;
+		td.tileY = y;
+		td.map = this;
 	}
 
 	void Update(){
@@ -88,6 +104,11 @@ public class TileMap : MonoBehaviour {
 						rp.tileX = x;
 						rp.tileY = y;
 						rp.map = this;
+
+						TileData td = tilesGrid[x,y].GetComponent<TileData>();
+						td.tileX = x;
+						td.tileY = y;
+						td.map = this;
 					}
 					else if(tiles[x,y] == 1){
 						tiles [x, y] = 0;
@@ -99,6 +120,11 @@ public class TileMap : MonoBehaviour {
 						rp.tileX = x;
 						rp.tileY = y;
 						rp.map = this;
+
+						TileData td = tilesGrid[x,y].GetComponent<TileData>();
+						td.tileX = x;
+						td.tileY = y;
+						td.map = this;
 					}						
 					
 				}
