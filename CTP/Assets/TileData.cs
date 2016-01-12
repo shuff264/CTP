@@ -28,15 +28,15 @@ public class TileData : MonoBehaviour {
 	public TileMap map;
 
 
-	void Update(){
-
-		if(tileX == 1 && tileY == 1){
-
-			Debug.Log(tileNorthType);
-
-		}
-	
-	
-	}
+//	void Update(){
+//
+//		if(tileX == 1 && tileY == 1){
+//
+//			Debug.Log(tileNorthType);
+//
+//		}
+//	
+//	
+//	}
 
 }

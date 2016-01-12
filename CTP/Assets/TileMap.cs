@@ -8,8 +8,8 @@ public class TileMap : MonoBehaviour {
 	int[,] tiles;
 	GameObject[,] tilesGrid;
 
-	int mapSizeX = 3;
-	int mapSizeY = 3;
+	int mapSizeX = 25;
+	int mapSizeY = 25;
 
 	void Start() {
 
