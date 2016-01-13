@@ -9,10 +9,10 @@ public class RoadPlacement : MonoBehaviour {
 
 	void OnMouseOver(){
 
-		if(Input.GetMouseButtonDown(0)){
+		if(Input.GetMouseButton(0)){
 			map.PlaceRoad (tileX, tileY);
 		}
-		else if(Input.GetMouseButtonDown(1)){
+		else if(Input.GetMouseButton(1)){
 			map.PlaceGrass(tileX, tileY);
 		}
 	}
