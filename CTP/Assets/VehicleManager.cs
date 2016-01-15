@@ -41,16 +41,20 @@ public class VehicleManager : MonoBehaviour {
 		//choose best
 		//set it as currentPosition
 		//Repeat till at goal
+
 		if(gameObject.transform.position == currentPosition){
+			//Gets the correct tiledata for the tile
+			TileData td = map.tilesGrid[(int)gameObject.transform.position.x, (int)gameObject.transform.position.y].GetComponent<TileData>();
 
-
-
-			TileData td = map.tilesGrid[x,y].GetComponent<TileData>();
-
-
+			if(td.tileNorthType == 1){
+				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z+1);
+			}
 
 		}
 
+
+
+		gameObject.transform.position = currentTile.transform.position;
 
 
 
