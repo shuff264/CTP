@@ -33,7 +33,7 @@ public class VehicleManager : MonoBehaviour {
 		currentPosition.y++;
 		
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -42,12 +42,10 @@ public class VehicleManager : MonoBehaviour {
 		//set it as currentPosition
 		//Repeat till at goal
 
-
-
 		if(gameObject.transform.position == currentPosition){
 
 			//Gets the correct tiledata for the tile
-			TileData td = map.tilesGrid[(int)gameObject.transform.position.x, (int)gameObject.transform.position.y].GetComponent<TileData>();
+			TileData td = map.tilesGrid[(int)gameObject.transform.position.x, (int)gameObject.transform.position.z].GetComponent<TileData>();
 
 			Debug.Log(td.tileNorthType);
 
