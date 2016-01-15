@@ -11,7 +11,7 @@ public class VehicleSpawn : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-			
+		//Instantiate(car, new Vector3(gameObject.transform.position.x, 1, gameObject.transform.position.z), Quaternion.identity);
 	
 	}
 	

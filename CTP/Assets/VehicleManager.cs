@@ -12,7 +12,7 @@ public class VehicleManager : MonoBehaviour {
 
 	public TileMap map;
 
-	GameObject currentTile;
+	public GameObject currentTile;
 	
 	// Use this for initialization
 	void Start () {
@@ -28,7 +28,7 @@ public class VehicleManager : MonoBehaviour {
 		endPosition = map.TileReturn(randX, randY).transform.position;
 		endPosition.y++;
 
-		currentTile = map.TileReturn((int)gameObject.transform.position.x, (int)gameObject.transform.position.y);
+		currentTile = map.TileReturn((int)gameObject.transform.position.x, (int)gameObject.transform.position.z);
 		currentPosition = currentTile.transform.position;
 		currentPosition.y++;
 		
@@ -42,9 +42,14 @@ public class VehicleManager : MonoBehaviour {
 		//set it as currentPosition
 		//Repeat till at goal
 
+
+
 		if(gameObject.transform.position == currentPosition){
+
 			//Gets the correct tiledata for the tile
 			TileData td = map.tilesGrid[(int)gameObject.transform.position.x, (int)gameObject.transform.position.y].GetComponent<TileData>();
+
+			Debug.Log(td.tileNorthType);
 
 			if(td.tileNorthType == 1){
 				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z+1);
@@ -53,8 +58,9 @@ public class VehicleManager : MonoBehaviour {
 			}
 
 		}
+	
 
-
+		//Debug.Log(currentPosition);
 
 		gameObject.transform.position = currentPosition;
 

@@ -81,6 +81,9 @@ public class TileMap : MonoBehaviour {
 
 	public GameObject TileReturn(int x, int y){
 
+
+		//Debug.Log(tilesGrid[x,y]);
+
 		return tilesGrid[x,y];
 
 	}
