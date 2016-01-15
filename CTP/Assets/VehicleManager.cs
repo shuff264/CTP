@@ -29,6 +29,8 @@ public class VehicleManager : MonoBehaviour {
 		endPosition.y++;
 
 		currentTile = map.TileReturn((int)gameObject.transform.position.x, (int)gameObject.transform.position.y);
+		currentPosition = currentTile.transform.position;
+		currentPosition.y++;
 		
 	}
 	
@@ -39,8 +41,19 @@ public class VehicleManager : MonoBehaviour {
 		//choose best
 		//set it as currentPosition
 		//Repeat till at goal
+		if(gameObject.transform.position == currentPosition){
 
-//		TileData td = tilesGrid[x,y].GetComponent<TileData>();
+
+
+			TileData td = map.tilesGrid[x,y].GetComponent<TileData>();
+
+
+
+		}
+
+
+
+
 //		td.tileX = x;
 //		td.tileY = y;
 //		if(y < mapSizeY - 1){
