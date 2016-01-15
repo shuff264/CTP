@@ -48,13 +48,15 @@ public class VehicleManager : MonoBehaviour {
 
 			if(td.tileNorthType == 1){
 				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z+1);
+				currentPosition = currentTile.transform.position;
+				currentPosition.y++;
 			}
 
 		}
 
 
 
-		gameObject.transform.position = currentTile.transform.position;
+		gameObject.transform.position = currentPosition;
 
 
 
