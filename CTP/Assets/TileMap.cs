@@ -5,8 +5,8 @@ public class TileMap : MonoBehaviour {
 
 	public TileType[] tileTypes;
 
-	int[,] tiles;
-	GameObject[,] tilesGrid;
+	public int[,] tiles;
+	public GameObject[,] tilesGrid;
 
 	public int mapSizeX = 25;
 	public int mapSizeY = 25;

@@ -28,6 +28,7 @@ public class VehicleManager : MonoBehaviour {
 		endPosition = map.TileReturn(randX, randY).transform.position;
 		endPosition.y++;
 
+		currentTile = map.TileReturn((int)gameObject.transform.position.x, (int)gameObject.transform.position.y);
 		
 	}
 	
@@ -38,6 +39,26 @@ public class VehicleManager : MonoBehaviour {
 		//choose best
 		//set it as currentPosition
 		//Repeat till at goal
+
+//		TileData td = tilesGrid[x,y].GetComponent<TileData>();
+//		td.tileX = x;
+//		td.tileY = y;
+//		if(y < mapSizeY - 1){
+//			td.tileNorthType =  tiles[x,y+1];
+//		}
+//		if(y > 0){
+//			td.tileSouthType = tiles[x,y-1];
+//		}
+//		if(x < mapSizeX - 1){
+//			td.tileEastType = tiles[x+1,y];
+//		}
+//		if(x > 0){
+//			td.tileWestType = tiles[x-1,y];
+//		}
+//		td.map = this;
+
+	
+
 
 		if (gameObject.transform.position == endPosition) {
 			

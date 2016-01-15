@@ -23,6 +23,7 @@ public class VehicleSpawn : MonoBehaviour {
 		if (randomValue < 1) {
 		
 			Instantiate(car, new Vector3(gameObject.transform.position.x, 1, gameObject.transform.position.z), Quaternion.identity);
+
 		
 		}
 
