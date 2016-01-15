@@ -55,6 +55,23 @@ public class VehicleManager : MonoBehaviour {
 				currentPosition.y++;
 			}
 
+			if(td.tileEastType == 1){
+				currentTile = map.TileReturn((int)currentTile.transform.position.x+1, (int)currentTile.transform.position.z);
+				currentPosition = currentTile.transform.position;
+				currentPosition.y++;
+			}
+
+			if(td.tileSouthType == 1){
+				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z-1);
+				currentPosition = currentTile.transform.position;
+				currentPosition.y++;
+			}
+
+			if(td.tileWestType == 1){
+				currentTile = map.TileReturn((int)currentTile.transform.position.x-1, (int)currentTile.transform.position.z);
+				currentPosition = currentTile.transform.position;
+				currentPosition.y++;
+			}
 		}
 	
 
