@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class VehicleManager : MonoBehaviour {
 
@@ -34,10 +35,47 @@ public class VehicleManager : MonoBehaviour {
 		
 	}
 
+
+
 	// Update is called once per frame
 	void Update () {
 
-		//Check four options on tile
+//		List<int> list = new List<int> { 2, 5, 7, 10 };
+//		int number = 9;
+//		for(int i =0; i<list.Count;i++){
+//			Debug.Log(list[i]);
+//		}
+//		Debug.Log("ENDLIST");
+		// find closest to number
+
+//		list.Sort(delegate(int a, int b) {
+//			Debug.Log(Mathf.Abs(a-number.CompareTo(b-number)));
+//			return (Mathf.Abs(a-number.CompareTo(b-number)));
+//		});
+//		for(int i =0; i<list.Count;i++){
+//			Debug.Log(list[i]);
+//		}
+
+			
+		int[] w = { 1000, 2000, 3000, 4000, 5000 };
+		
+		int searchValue = 900;
+		int currentNearest = w[0];
+		int currentDifference = Mathf.Abs(currentNearest - searchValue);
+		
+		for (int i = 1; i < w.Length; i++)
+		{
+			int diff = Mathf.Abs(w[i] - searchValue);
+			if (diff < currentDifference)
+			{
+				currentDifference = diff;
+				currentNearest = w[i];
+			}
+		}
+
+		Debug.Log(currentNearest);
+			
+			//Check four options on tile
 		//choose best
 		//set it as currentPosition
 		//Repeat till at goal
