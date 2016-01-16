@@ -56,20 +56,20 @@ public class VehicleManager : MonoBehaviour {
 //			Debug.Log(list[i]);
 //		}
 
-			
-		int[] w = { 1000, 2000, 3000, 4000, 5000 };
+		//TEST COMPARATOR	
+		int[] w = { 1000, 2000, 3000, 4000, 5000 }; //List to choose from
 		
-		int searchValue = 900;
-		int currentNearest = w[0];
-		int currentDifference = Mathf.Abs(currentNearest - searchValue);
+		int searchValue = 6000; //Value to be found in list
+		int currentNearest = w[0]; //The current nearest value reflected as a position in list
+		int currentDifference = Mathf.Abs(currentNearest - searchValue); //Works out the current different between the closest and the value
 		
 		for (int i = 1; i < w.Length; i++)
 		{
-			int diff = Mathf.Abs(w[i] - searchValue);
-			if (diff < currentDifference)
+			int diff = Mathf.Abs(w[i] - searchValue); //value from array - search amount to get the difference
+			if (diff < currentDifference) //if the difference is less than current diffrence - if its closer than current closests
 			{
-				currentDifference = diff;
-				currentNearest = w[i];
+				currentDifference = diff; //change current difference to this difference
+				currentNearest = w[i]; //change current nearest to this value
 			}
 		}
 
