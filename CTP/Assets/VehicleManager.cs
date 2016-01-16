@@ -25,7 +25,7 @@ public class VehicleManager : MonoBehaviour {
 		int randY = Random.Range (0, map.mapSizeY - 1);
 	
 		startPosition = gameObject.transform.position;
-		endPosition = map.TileReturn(randX, randY).transform.position;
+		endPosition = roadFinder.roadPieces[randX].transform.position;
 		endPosition.y++;
 
 		currentTile = map.TileReturn((int)gameObject.transform.position.x, (int)gameObject.transform.position.z);
