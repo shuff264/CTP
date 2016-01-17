@@ -20,7 +20,7 @@ public class VehicleManager : MonoBehaviour {
 
 	public GameObject currentTile;
 
-
+	List<int> tileOptions;
 	
 
 
@@ -43,6 +43,7 @@ public class VehicleManager : MonoBehaviour {
 		currentPosition = currentTile.transform.position;
 		currentPosition.y++;
 
+
 	}
 
 
@@ -51,7 +52,8 @@ public class VehicleManager : MonoBehaviour {
 	void Update () {
 
 		Dictionary<int, GameObject> tileDic = new Dictionary<int, GameObject>(); 
-		
+		List<int> tileOptions = new List<int>(){0,1,2,3};
+
 		tileDic.Add(0, map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z+1));
 		tileDic.Add(1, map.TileReturn((int)currentTile.transform.position.x+1, (int)currentTile.transform.position.z));
 		tileDic.Add(2, map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z-1));
@@ -116,7 +118,7 @@ public class VehicleManager : MonoBehaviour {
 
 		Nearest:
 			Vector2 searchValue = new Vector2(endPosition.x, endPosition.z); //Value to be found in list
-			Vector2 currentNearest = new Vector2(tileDic[0].transform.position.x, tileDic[0].transform.position.z); //The current nearest value reflected as a position in list
+			Vector2 currentNearest = new Vector2(tileDic[tileOptions[0]].transform.position.x, tileDic[tileOptions[0]].transform.position.z); //The current nearest value reflected as a position in list
 			int dicNearest = 0;
 
 			float currentDifferenceX = Mathf.Abs(currentNearest.x - searchValue.x);
@@ -127,18 +129,19 @@ public class VehicleManager : MonoBehaviour {
 			for (int i = 0; i < 4; i++)
 			{
 				//int diff = Mathf.Abs(vecArray[i] - searchValue); //value from array - search amount to get the difference
+				if(tileOptions.Contains(i)){
+					float diffX = Mathf.Abs(tileDic[i].transform.position.x - searchValue.x);
+					float diffY = Mathf.Abs(tileDic[i].transform.position.y - searchValue.y);
 
-				float diffX = Mathf.Abs(tileDic[i].transform.position.x - searchValue.x);
-				float diffY = Mathf.Abs(tileDic[i].transform.position.y - searchValue.y);
+					Vector2 diff = new Vector2(diffX, diffY);
 
-				Vector2 diff = new Vector2(diffX, diffY);
-
-				if (diff.x < currentDifference.x){ //if the difference is less than current diffrence - if its closer than current closests
-					if(diff.y < currentDifference.y){
-						currentDifference = diff; //change current difference to this difference
-						currentNearest = new Vector2(tileDic[i].transform.position.x, tileDic[i].transform.position.z); //change current nearest to this value
-						dicNearest = i;
-						
+					if (diff.x < currentDifference.x){ //if the difference is less than current diffrence - if its closer than current closests
+						if(diff.y < currentDifference.y){
+							currentDifference = diff; //change current difference to this difference
+							currentNearest = new Vector2(tileDic[i].transform.position.x, tileDic[i].transform.position.z); //change current nearest to this value
+							dicNearest = i;
+							
+						}
 					}
 				}
 			}
@@ -149,7 +152,7 @@ public class VehicleManager : MonoBehaviour {
 				currentTile = map.TileReturn((int)currentNearest.x, (int)currentNearest.y);
 			}
 			else{ 
-				tileDic.Remove(dicNearest);
+				tileOptions.Remove(dicNearest);
 				goto Nearest;
 			}
 //
