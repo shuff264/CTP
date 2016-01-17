@@ -9,11 +9,20 @@ public class VehicleManager : MonoBehaviour {
 	public Vector3 endPosition; //The end goal
 	float speed = 1.0f;
 		
+	public int northType;
+	public int eastType;
+	public int southType;
+	public int westType;
+
 	public RoadFinder roadFinder;
 
 	public TileMap map;
 
 	public GameObject currentTile;
+
+	
+
+
 	Vector2[] vecArray;
 	// Use this for initialization
 	void Start () {
@@ -49,35 +58,44 @@ public class VehicleManager : MonoBehaviour {
 
 			vecArray = new Vector2[4];
 
-			if(td.tileNorthType == 1){
-				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z+1);
-				currentPosition = currentTile.transform.position;
+			//Getting confused because it thinks the grass tiles are the best option
+			//because they are 0,0
 
-				vecArray[0] = new Vector2(currentTile.transform.position.x,currentTile.transform.position.z);
+			northType = td.tileNorthType;
+			eastType = td.tileEastType;
+			southType = td.tileSouthType;
+			westType = td.tileWestType;
+
+
+			if(td.tileNorthType == 1){
+				GameObject northTempTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z+1);
+			 	Vector3 northTempPosition = currentTile.transform.position;
+
+				vecArray[0] = new Vector2(northTempTile.transform.position.x,northTempTile.transform.position.z);
 
 			}
 
 			if(td.tileEastType == 1){
-				currentTile = map.TileReturn((int)currentTile.transform.position.x+1, (int)currentTile.transform.position.z);
-				currentPosition = currentTile.transform.position;
+				GameObject eastTempTile = map.TileReturn((int)currentTile.transform.position.x+1, (int)currentTile.transform.position.z);
+				Vector3 eastTempPosition = currentTile.transform.position;
 				
-				vecArray[1] = new Vector2(currentTile.transform.position.x,currentTile.transform.position.z);
+				vecArray[1] = new Vector2(eastTempTile.transform.position.x,eastTempTile.transform.position.z);
 				
 			}
 
 			if(td.tileSouthType == 1){
-				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z-1);
-				currentPosition = currentTile.transform.position;
+				GameObject southTempTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z-1);
+				Vector3 southTempPosition = currentTile.transform.position;
 				
-				vecArray[2] = new Vector2(currentTile.transform.position.x,currentTile.transform.position.z);
+				vecArray[2] = new Vector2(southTempTile.transform.position.x,southTempTile.transform.position.z);
 				
 			}
 
-			if(td.tileEastType == 1){
-				currentTile = map.TileReturn((int)currentTile.transform.position.x-1, (int)currentTile.transform.position.z);
-				currentPosition = currentTile.transform.position;
+			if(td.tileWestType == 1){
+				GameObject westTempTile = map.TileReturn((int)currentTile.transform.position.x-1, (int)currentTile.transform.position.z);
+				Vector3 westTempPosition = currentTile.transform.position;
 				
-				vecArray[3] = new Vector2(currentTile.transform.position.x,currentTile.transform.position.z);
+				vecArray[3] = new Vector2(westTempTile.transform.position.x,westTempTile.transform.position.z);
 				
 			}
 
