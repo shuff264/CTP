@@ -50,8 +50,9 @@ public class VehicleManager : MonoBehaviour {
 	void Update () {
 
 
-		if(gameObject.transform.position == currentPosition){
 
+		if(gameObject.transform.position == currentPosition){
+			Debug.Log("ITS THE SAME");
 			//Gets the correct tiledata for the tile
 			TileData td = map.tilesGrid[(int)gameObject.transform.position.x, (int)gameObject.transform.position.z].GetComponent<TileData>();
 
@@ -69,7 +70,7 @@ public class VehicleManager : MonoBehaviour {
 
 			if(td.tileNorthType == 1){
 				GameObject northTempTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z+1);
-			 	Vector3 northTempPosition = currentTile.transform.position;
+				Vector3 northTempPosition = northTempTile.transform.position;
 
 				vecArray[0] = new Vector2(northTempTile.transform.position.x,northTempTile.transform.position.z);
 
@@ -77,7 +78,7 @@ public class VehicleManager : MonoBehaviour {
 
 			if(td.tileEastType == 1){
 				GameObject eastTempTile = map.TileReturn((int)currentTile.transform.position.x+1, (int)currentTile.transform.position.z);
-				Vector3 eastTempPosition = currentTile.transform.position;
+				Vector3 eastTempPosition = eastTempTile.transform.position;
 				
 				vecArray[1] = new Vector2(eastTempTile.transform.position.x,eastTempTile.transform.position.z);
 				
@@ -85,7 +86,7 @@ public class VehicleManager : MonoBehaviour {
 
 			if(td.tileSouthType == 1){
 				GameObject southTempTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z-1);
-				Vector3 southTempPosition = currentTile.transform.position;
+				Vector3 southTempPosition = southTempTile.transform.position;
 				
 				vecArray[2] = new Vector2(southTempTile.transform.position.x,southTempTile.transform.position.z);
 				
@@ -93,7 +94,7 @@ public class VehicleManager : MonoBehaviour {
 
 			if(td.tileWestType == 1){
 				GameObject westTempTile = map.TileReturn((int)currentTile.transform.position.x-1, (int)currentTile.transform.position.z);
-				Vector3 westTempPosition = currentTile.transform.position;
+				Vector3 westTempPosition = westTempTile.transform.position;
 				
 				vecArray[3] = new Vector2(westTempTile.transform.position.x,westTempTile.transform.position.z);
 				
@@ -137,6 +138,7 @@ public class VehicleManager : MonoBehaviour {
 
 			gameObject.transform.position = currentPosition;
 		}
+		else{Debug.Log("Fail");}
 
 	
 
