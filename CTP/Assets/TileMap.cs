@@ -10,7 +10,7 @@ public class TileMap : MonoBehaviour {
 	public int[,] tiles;
 	public GameObject[,] tilesGrid;
 	public List<Node> currentPath = null;
-
+	public Node[,] graph;
 	public int mapSizeX = 25;
 	public int mapSizeY = 25;
 
@@ -40,21 +40,12 @@ public class TileMap : MonoBehaviour {
 
 	}
 
-	public class Node {
-		public List<Node> neighbours;
-		public int x;
-		public int y;
+	float CostToEnterTile(int x, int y){
+		TileType tt = tileTypes[tiles[x,y]];
 
-		public Node(){
-			neighbours = new List<Node>();
-		}
-
-		public float DistanceTo(Node n){
-			return Vector2.Distance(new Vector2(x,y), new Vector2(n.x,n.y));
-		}
+		return tt.movementCost;
 	}
 
-	Node[,] graph;
 
 	void GeneratePathFindingGraph(){
 
@@ -149,7 +140,9 @@ public class TileMap : MonoBehaviour {
 			unvisited.Remove(u);
 
 			foreach(Node v in u.neighbours){
-				float temp = dist[u] + u.DistanceTo(v);
+				//float temp = dist[u] + u.DistanceTo(v);
+				float temp = dist[u] + u.DistanceTo(v) + CostToEnterTile(v.x, v.y);
+				
 				if(temp < dist[v]){
 					dist[v] = temp;
 					prev[v] = u;
