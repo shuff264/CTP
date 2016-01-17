@@ -40,26 +40,6 @@ public class VehicleManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-//		List<int> list = new List<int> { 2, 5, 7, 10 };
-//		int number = 9;
-//		for(int i =0; i<list.Count;i++){
-//			Debug.Log(list[i]);
-//		}
-//		Debug.Log("ENDLIST");
-		// find closest to number
-
-//		list.Sort(delegate(int a, int b) {
-//			Debug.Log(Mathf.Abs(a-number.CompareTo(b-number)));
-//			return (Mathf.Abs(a-number.CompareTo(b-number)));
-//		});
-//		for(int i =0; i<list.Count;i++){
-//			Debug.Log(list[i]);
-//		}
-
-		//TEST COMPARATOR	
-		//int[] w = { 1000, 2000, 3000, 4000, 5000 }; //List to choose from
-
-		//current tile = 5,5
 
 		if(gameObject.transform.position == currentPosition){
 
@@ -107,7 +87,7 @@ public class VehicleManager : MonoBehaviour {
 //
 //			}
 //			
-			Vector2 searchValue = new Vector2(10,8); //Value to be found in list
+			Vector2 searchValue = new Vector2(endPosition.x, endPosition.z); //Value to be found in list
 			Vector2 currentNearest = vecArray[0]; //The current nearest value reflected as a position in list
 
 			float currentDifferenceX = Mathf.Abs(currentNearest.x - searchValue.x);
@@ -134,69 +114,11 @@ public class VehicleManager : MonoBehaviour {
 
 //			Debug.Log(currentNearest);
 
+			currentPosition = new Vector3(currentNearest.x, 1, currentNearest.y);
 
-			gameObject.transform.position = new Vector3(currentNearest.x, 1, currentNearest.y);
+
+			gameObject.transform.position = currentPosition;
 		}
-			
-			//Check four options on tile
-		//choose best
-		//set it as currentPosition
-		//Repeat till at goal
-
-//		if(gameObject.transform.position == currentPosition){
-//
-//			//Gets the correct tiledata for the tile
-//			TileData td = map.tilesGrid[(int)gameObject.transform.position.x, (int)gameObject.transform.position.z].GetComponent<TileData>();
-//
-//			Debug.Log(td.tileNorthType);
-//
-//			if(td.tileNorthType == 1){
-//				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z+1);
-//				currentPosition = currentTile.transform.position;
-//				currentPosition.y++;
-//			}
-//
-//			if(td.tileEastType == 1){
-//				currentTile = map.TileReturn((int)currentTile.transform.position.x+1, (int)currentTile.transform.position.z);
-//				currentPosition = currentTile.transform.position;
-//				currentPosition.y++;
-//			}
-//
-//			if(td.tileSouthType == 1){
-//				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z-1);
-//				currentPosition = currentTile.transform.position;
-//				currentPosition.y++;
-//			}
-//
-//			if(td.tileWestType == 1){
-//				currentTile = map.TileReturn((int)currentTile.transform.position.x-1, (int)currentTile.transform.position.z);
-//				currentPosition = currentTile.transform.position;
-//				currentPosition.y++;
-//			}
-//		}
-//	
-
-		//Debug.Log(currentPosition);
-
-
-
-
-
-//		td.tileX = x;
-//		td.tileY = y;
-//		if(y < mapSizeY - 1){
-//			td.tileNorthType =  tiles[x,y+1];
-//		}
-//		if(y > 0){
-//			td.tileSouthType = tiles[x,y-1];
-//		}
-//		if(x < mapSizeX - 1){
-//			td.tileEastType = tiles[x+1,y];
-//		}
-//		if(x > 0){
-//			td.tileWestType = tiles[x-1,y];
-//		}
-//		td.map = this;
 
 	
 
@@ -207,7 +129,8 @@ public class VehicleManager : MonoBehaviour {
 			DestroyObject(gameObject);
 			
 		}
-		
+	
+
 	}
 }
 
