@@ -33,7 +33,7 @@ public class Vehicle : MonoBehaviour {
 		tileX = (int)startPosition.x;
 		tileY = (int)startPosition.z;
 		endPosition = new Vector3 (roadFinder.roadPieces [randX].transform.position.x, 1, roadFinder.roadPieces [randX].transform.position.z);
-		journeyLength = Vector3.Distance (startPosition, endPosition);
+
 
 		currentPath = tm.GeneratePathTo(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 		
@@ -62,9 +62,16 @@ public class Vehicle : MonoBehaviour {
 		if(currentPath == null){
 			return;
 		}
-		currentPath.RemoveAt(0);
+
+
+//		float distCovered = (Time.time - startTime) * speed;
+//		journeyLength = Vector3.Distance (startPosition, endPosition);
+//		float fracJourney = distCovered / journeyLength;
+//	
+//		gameObject.transform.position = Vector3.Lerp (startPosition, endPosition, fracJourney);
 
 		transform.position = new Vector3(currentPath[0].x, 1, currentPath[0].y);
+
 
 		if(currentPath.Count == 1){
 			currentPath = null;
