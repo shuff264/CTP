@@ -63,6 +63,7 @@ public class Vehicle : MonoBehaviour {
 			return;
 		}
 
+		currentPath.RemoveAt(0);
 
 //		float distCovered = (Time.time - startTime) * speed;
 //		journeyLength = Vector3.Distance (startPosition, endPosition);
@@ -73,7 +74,7 @@ public class Vehicle : MonoBehaviour {
 		transform.position = new Vector3(currentPath[0].x, 1, currentPath[0].y);
 
 
-		if(currentPath.Count == 1){
+		if(currentPath.Count <= 1){
 			currentPath = null;
 			Destroy(gameObject);
 		}
