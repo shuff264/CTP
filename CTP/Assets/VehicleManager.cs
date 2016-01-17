@@ -14,7 +14,7 @@ public class VehicleManager : MonoBehaviour {
 	public TileMap map;
 
 	public GameObject currentTile;
-	
+	Vector2[] vecArray;
 	// Use this for initialization
 	void Start () {
 		
@@ -22,8 +22,8 @@ public class VehicleManager : MonoBehaviour {
 		map = GameObject.Find ("Map").GetComponent<TileMap> ();
 		
 		
-		int randX = Random.Range (0, map.mapSizeX - 1);
-		int randY = Random.Range (0, map.mapSizeY - 1);
+		int randX = Random.Range (0, roadFinder.roadPieces.Length);
+		int randY = Random.Range (0, roadFinder.roadPieces.Length);
 	
 		startPosition = gameObject.transform.position;
 		endPosition = roadFinder.roadPieces[randX].transform.position;
@@ -32,7 +32,7 @@ public class VehicleManager : MonoBehaviour {
 		currentTile = map.TileReturn((int)gameObject.transform.position.x, (int)gameObject.transform.position.z);
 		currentPosition = currentTile.transform.position;
 		currentPosition.y++;
-		
+
 	}
 
 
@@ -61,83 +61,124 @@ public class VehicleManager : MonoBehaviour {
 
 		//current tile = 5,5
 
-		Vector2[] vecArray;
-		vecArray = new Vector2[]
-		{
-			new Vector2( 5, 6 ), //north
-			new Vector2( 6, 5 ), //east
-			new Vector2( 5, 4 ), //south
-			new Vector2( 4, 5 ), //west
-		};
-		
-		Vector2 searchValue = new Vector2(10,8); //Value to be found in list
-		Vector2 currentNearest = vecArray[0]; //The current nearest value reflected as a position in list
+		if(gameObject.transform.position == currentPosition){
 
-		float currentDifferenceX = Mathf.Abs(currentNearest.x - searchValue.x);
-		float currentDifferenceY = Mathf.Abs(currentNearest.y - searchValue.y);
-		Vector2 currentDifference = new Vector2(currentDifferenceX, currentDifferenceY);
-		//int currentDifference = Mathf.Abs(currentNearest - searchValue); //Works out the current different between the closest and the value
-		
-		for (int i = 0; i < vecArray.Length; i++)
-		{
-			//int diff = Mathf.Abs(vecArray[i] - searchValue); //value from array - search amount to get the difference
+			//Gets the correct tiledata for the tile
+			TileData td = map.tilesGrid[(int)gameObject.transform.position.x, (int)gameObject.transform.position.z].GetComponent<TileData>();
 
-			float diffX = Mathf.Abs(vecArray[i].x - searchValue.x);
-			float diffY = Mathf.Abs(vecArray[i].y - searchValue.y);
 
-			Vector2 diff = new Vector2(diffX, diffY);
+			vecArray = new Vector2[4];
 
-			if (diff.x < currentDifference.x){ //if the difference is less than current diffrence - if its closer than current closests
-				if(diff.y < currentDifference.y){
-					currentDifference = diff; //change current difference to this difference
-					currentNearest = vecArray[i]; //change current nearest to this value
+			if(td.tileNorthType == 1){
+				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z+1);
+				currentPosition = currentTile.transform.position;
+
+				vecArray[0] = new Vector2(currentTile.transform.position.x,currentTile.transform.position.z);
+
+			}
+
+			if(td.tileEastType == 1){
+				currentTile = map.TileReturn((int)currentTile.transform.position.x+1, (int)currentTile.transform.position.z);
+				currentPosition = currentTile.transform.position;
+				
+				vecArray[1] = new Vector2(currentTile.transform.position.x,currentTile.transform.position.z);
+				
+			}
+
+			if(td.tileSouthType == 1){
+				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z-1);
+				currentPosition = currentTile.transform.position;
+				
+				vecArray[2] = new Vector2(currentTile.transform.position.x,currentTile.transform.position.z);
+				
+			}
+
+			if(td.tileEastType == 1){
+				currentTile = map.TileReturn((int)currentTile.transform.position.x-1, (int)currentTile.transform.position.z);
+				currentPosition = currentTile.transform.position;
+				
+				vecArray[3] = new Vector2(currentTile.transform.position.x,currentTile.transform.position.z);
+				
+			}
+
+//			for(int i = 0; i < vecArray.Length; i++){
+//
+//				Debug.Log(vecArray[i]);
+//
+//			}
+//			
+			Vector2 searchValue = new Vector2(10,8); //Value to be found in list
+			Vector2 currentNearest = vecArray[0]; //The current nearest value reflected as a position in list
+
+			float currentDifferenceX = Mathf.Abs(currentNearest.x - searchValue.x);
+			float currentDifferenceY = Mathf.Abs(currentNearest.y - searchValue.y);
+			Vector2 currentDifference = new Vector2(currentDifferenceX, currentDifferenceY);
+			//int currentDifference = Mathf.Abs(currentNearest - searchValue); //Works out the current different between the closest and the value
+			
+			for (int i = 0; i < vecArray.Length; i++)
+			{
+				//int diff = Mathf.Abs(vecArray[i] - searchValue); //value from array - search amount to get the difference
+
+				float diffX = Mathf.Abs(vecArray[i].x - searchValue.x);
+				float diffY = Mathf.Abs(vecArray[i].y - searchValue.y);
+
+				Vector2 diff = new Vector2(diffX, diffY);
+
+				if (diff.x < currentDifference.x){ //if the difference is less than current diffrence - if its closer than current closests
+					if(diff.y < currentDifference.y){
+						currentDifference = diff; //change current difference to this difference
+						currentNearest = vecArray[i]; //change current nearest to this value
+					}
 				}
 			}
-		}
 
-		Debug.Log(currentNearest);
+//			Debug.Log(currentNearest);
+
+
+			gameObject.transform.position = new Vector3(currentNearest.x, 1, currentNearest.y);
+		}
 			
 			//Check four options on tile
 		//choose best
 		//set it as currentPosition
 		//Repeat till at goal
 
-		if(gameObject.transform.position == currentPosition){
-
-			//Gets the correct tiledata for the tile
-			TileData td = map.tilesGrid[(int)gameObject.transform.position.x, (int)gameObject.transform.position.z].GetComponent<TileData>();
-
-			Debug.Log(td.tileNorthType);
-
-			if(td.tileNorthType == 1){
-				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z+1);
-				currentPosition = currentTile.transform.position;
-				currentPosition.y++;
-			}
-
-			if(td.tileEastType == 1){
-				currentTile = map.TileReturn((int)currentTile.transform.position.x+1, (int)currentTile.transform.position.z);
-				currentPosition = currentTile.transform.position;
-				currentPosition.y++;
-			}
-
-			if(td.tileSouthType == 1){
-				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z-1);
-				currentPosition = currentTile.transform.position;
-				currentPosition.y++;
-			}
-
-			if(td.tileWestType == 1){
-				currentTile = map.TileReturn((int)currentTile.transform.position.x-1, (int)currentTile.transform.position.z);
-				currentPosition = currentTile.transform.position;
-				currentPosition.y++;
-			}
-		}
-	
+//		if(gameObject.transform.position == currentPosition){
+//
+//			//Gets the correct tiledata for the tile
+//			TileData td = map.tilesGrid[(int)gameObject.transform.position.x, (int)gameObject.transform.position.z].GetComponent<TileData>();
+//
+//			Debug.Log(td.tileNorthType);
+//
+//			if(td.tileNorthType == 1){
+//				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z+1);
+//				currentPosition = currentTile.transform.position;
+//				currentPosition.y++;
+//			}
+//
+//			if(td.tileEastType == 1){
+//				currentTile = map.TileReturn((int)currentTile.transform.position.x+1, (int)currentTile.transform.position.z);
+//				currentPosition = currentTile.transform.position;
+//				currentPosition.y++;
+//			}
+//
+//			if(td.tileSouthType == 1){
+//				currentTile = map.TileReturn((int)currentTile.transform.position.x, (int)currentTile.transform.position.z-1);
+//				currentPosition = currentTile.transform.position;
+//				currentPosition.y++;
+//			}
+//
+//			if(td.tileWestType == 1){
+//				currentTile = map.TileReturn((int)currentTile.transform.position.x-1, (int)currentTile.transform.position.z);
+//				currentPosition = currentTile.transform.position;
+//				currentPosition.y++;
+//			}
+//		}
+//	
 
 		//Debug.Log(currentPosition);
 
-		gameObject.transform.position = currentPosition;
+
 
 
 
@@ -161,7 +202,8 @@ public class VehicleManager : MonoBehaviour {
 
 
 		if (gameObject.transform.position == endPosition) {
-			
+
+			Debug.Log("DESTROY");
 			DestroyObject(gameObject);
 			
 		}
