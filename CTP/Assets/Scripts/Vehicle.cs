@@ -36,6 +36,10 @@ public class Vehicle : MonoBehaviour {
 
 
 		currentPath = tm.GeneratePathTo(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
+
+		if(currentPath == null){
+			Destroy(gameObject);
+		}
 		
 	}
 
@@ -60,7 +64,7 @@ public class Vehicle : MonoBehaviour {
 
 	public void MoveNextTile(){
 		if(currentPath == null){
-			return;
+			Destroy(gameObject);
 		}
 
 		currentPath.RemoveAt(0);

@@ -46,6 +46,12 @@ public class TileMap : MonoBehaviour {
 		return tt.movementCost;
 	}
 
+	bool MovementAllowed(int x, int y){
+		TileType tt = tileTypes[tiles[x,y]];
+		
+		return tt.movementAllowed;
+	}
+
 
 	void GeneratePathFindingGraph(){
 
@@ -141,21 +147,24 @@ public class TileMap : MonoBehaviour {
 
 			foreach(Node v in u.neighbours){
 				//float temp = dist[u] + u.DistanceTo(v);
-				float temp = dist[u] + u.DistanceTo(v) + CostToEnterTile(v.x, v.y);
-				
-				if(temp < dist[v]){
-					dist[v] = temp;
-					prev[v] = u;
+				if(MovementAllowed(v.x, v.y)){
+					float temp = dist[u] + u.DistanceTo(v) + CostToEnterTile(v.x, v.y);
+					
+					if(temp < dist[v]){
+						dist[v] = temp;
+						prev[v] = u;
+					}
 				}
 			}
 		}
-
-//		if(prev[target] == null){
-//			//No route
-//			return;
-//		}
-
 		currentPath = new List<Node>();
+
+
+		if(prev[target] == null){
+			//No route
+			Debug.Log("NO ROUTE");
+			return currentPath = null;
+		}
 
 		Node current = target;
 

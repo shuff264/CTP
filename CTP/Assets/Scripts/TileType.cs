@@ -8,4 +8,5 @@ public class TileType {
 	public GameObject tilePrefab;
 
 	public float movementCost = 1;
+	public bool movementAllowed = true;
 }
