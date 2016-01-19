@@ -52,7 +52,7 @@ public class Vehicle : MonoBehaviour {
 				Vector3 start = new Vector3 (currentPath[currentNode].x, 1, currentPath[currentNode].y);
 				Vector3 end   = new Vector3 (currentPath[currentNode].x, 1, currentPath[currentNode].y);
 
-				Debug.DrawLine(start, end, Color.red);
+
 
 				currentNode++;
 			}
