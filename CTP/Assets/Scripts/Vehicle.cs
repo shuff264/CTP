@@ -49,42 +49,20 @@ public class Vehicle : MonoBehaviour {
 	}
 
 	void Update(){
-		if(currentPath != null){
-	
-			int currentNode = 0;
-
-			while(currentNode < currentPath.Count-1){
-				Vector3 start = new Vector3 (currentPath[currentNode].x, 1, currentPath[currentNode].y);
-				Vector3 end   = new Vector3 (currentPath[currentNode].x, 1, currentPath[currentNode].y);
-
-
-				currentNode++;
-			}
-		}
-
 		MoveNextTile();
-
 	}
 
 	public void MoveNextTile(){
 		if(currentPath == null){
-		//	vs.currentNumberOfVehicles--;
 			Destroy(gameObject);
 		}
 
 		currentPath.RemoveAt(0);
 
-//		float distCovered = (Time.time - startTime) * speed;
-//		journeyLength = Vector3.Distance (startPosition, endPosition);
-//		float fracJourney = distCovered / journeyLength;
-//	
-//		gameObject.transform.position = Vector3.Lerp (startPosition, endPosition, fracJourney);
-
 		transform.position = new Vector3(currentPath[0].x, 1, currentPath[0].y);
-
+	
 
 		if(currentPath.Count <= 1){
-			//vs.currentNumberOfVehicles--;
 			currentPath = null;
 			Destroy(gameObject);
 		}
