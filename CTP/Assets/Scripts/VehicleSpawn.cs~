@@ -16,17 +16,18 @@ public class VehicleSpawn : MonoBehaviour {
 	}
 
 	void Update () {
-			randomValue = Random.Range (0, 1000);	
-			randomX = Random.Range(0,24);
-			randomY = Random.Range(0,24);
+		randomValue = Random.Range (0, 1000);	
+		randomX = Random.Range(0,24);
+		randomY = Random.Range(0,24);
 
-			if (randomValue < 20) {
-			while(!tm.MovementAllowed(randomX, randomY)){
+		if (randomValue < 10) {
+			if(tm.MovementAllowed(randomX, randomY)){
+				Instantiate(car, new Vector3(randomX, 1, randomY), Quaternion.identity);
+			}
+			else{
 				randomX = Random.Range(0,24);
 				randomY = Random.Range(0,24);
 			}
-
-			Instantiate(car, new Vector3(randomX, 1, randomY), Quaternion.identity);
 		}
 	}
 }
