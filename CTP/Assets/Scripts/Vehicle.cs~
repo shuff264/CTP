@@ -21,20 +21,16 @@ public class Vehicle : MonoBehaviour {
 
 
 	public TileMap tm;
-	public VehicleSpawn vs;
+
 	
 	// Use this for initialization
 	void Start () {
-	
-		vs = GameObject.Find ("Controller").GetComponent<VehicleSpawn> ();
+
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
 
 		randomX = Random.Range(0,24);
 		randomY = Random.Range(0,24);
-		
-	//	int randX = Random.Range (0, roadFinder.roadPieces.Length - 1);
-		//		float randY = Random.Range (0, 100);
-		
+
 		startTime = Time.time;
 		startPosition = gameObject.transform.position;
 		tileX = (int)startPosition.x;
@@ -44,14 +40,10 @@ public class Vehicle : MonoBehaviour {
 
 		endPosition = new Vector3 (randomX, 1, randomY);
 
-
 		currentPath = tm.GeneratePathTo(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 
 		if(currentPath == null){
-//			vs.currentNumberOfVehicles--;
 			Destroy(gameObject);
-			
-
 		}
 		
 	}
@@ -64,7 +56,6 @@ public class Vehicle : MonoBehaviour {
 			while(currentNode < currentPath.Count-1){
 				Vector3 start = new Vector3 (currentPath[currentNode].x, 1, currentPath[currentNode].y);
 				Vector3 end   = new Vector3 (currentPath[currentNode].x, 1, currentPath[currentNode].y);
-
 
 
 				currentNode++;
@@ -101,9 +92,9 @@ public class Vehicle : MonoBehaviour {
 
 	void GenerateEndPosition(){
 
-		while(!tm.MovementAllowed(randomX, randomY)){
+	//	while(!tm.MovementAllowed(randomX, randomY)){
 			randomX = Random.Range(0,24);
 			randomY = Random.Range(0,24);
-		}
+	//	}
 	}
-}
+}	

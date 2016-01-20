@@ -20,7 +20,7 @@ public class VehicleSpawn : MonoBehaviour {
 		randomX = Random.Range(0,24);
 		randomY = Random.Range(0,24);
 
-		if (randomValue < 10) {
+		if (randomValue < 20) {
 			if(tm.MovementAllowed(randomX, randomY)){
 				Instantiate(car, new Vector3(randomX, 1, randomY), Quaternion.identity);
 			}
