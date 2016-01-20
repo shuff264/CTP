@@ -4,9 +4,9 @@ using System.Collections;
 [System.Serializable]
 public class TileType {
 
-	public string name;
-	public GameObject tilePrefab;
+	public string name; //Name of the tile type
+	public GameObject tilePrefab; //Prefab attached to the tile type
 
-	public float movementCost = 1;
-	public bool movementAllowed = true;
+	public float movementCost = 1; //Cost for the vehicle to enter the tile
+	public bool movementAllowed = true; //Is the vehicle able to enter the tile
 }
