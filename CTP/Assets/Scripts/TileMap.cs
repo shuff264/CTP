@@ -91,13 +91,13 @@ public class TileMap : MonoBehaviour {
 	//Tile types
 	//Maybe turning or traffic lights have a higher
 	//Movement cost for the vehicle
-	float CostToEnterTile(int x, int y){
+	public float CostToEnterTile(int x, int y){
 		TileType tt = tileTypes[tiles[x,y]];
 		return tt.movementCost;
 	}
 
 	//Controls wether the vechicle can go into a tile
-	bool MovementAllowed(int x, int y){
+	public bool MovementAllowed(int x, int y){
 		TileType tt = tileTypes[tiles[x,y]];
 		return tt.movementAllowed;
 	}
@@ -145,8 +145,10 @@ public class TileMap : MonoBehaviour {
 		for (int x = 0; x < mapSizeX; x++) {
 			for (int y = 0; y < mapSizeY; y++) {
 				TileType tt = tileTypes[tiles[x,y]];
-				
+
 				tilesGrid[x,y] = (GameObject) Instantiate(tt.tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
+
+				//tilesGrid[x,y] = (GameObject) Instantiate(tt.tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
 				//Setting variables for the road placement script
 				RoadPlacement rp = tilesGrid[x,y].GetComponent<RoadPlacement>();
 				rp.tileX = x;

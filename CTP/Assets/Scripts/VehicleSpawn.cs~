@@ -20,7 +20,7 @@ public class VehicleSpawn : MonoBehaviour {
 			randomX = Random.Range(0,24);
 			randomY = Random.Range(0,24);
 
-			if (randomValue < 10) {
+			if (randomValue < 20) {
 			while(!tm.MovementAllowed(randomX, randomY)){
 				randomX = Random.Range(0,24);
 				randomY = Random.Range(0,24);

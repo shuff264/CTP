@@ -7,6 +7,9 @@ public class Vehicle : MonoBehaviour {
 	public int tileX;
 	public int tileY;
 
+	int randomX;
+	int randomY;
+
 	public List<Node> currentPath = null;
 
 	Vector3 startPosition;
@@ -16,29 +19,39 @@ public class Vehicle : MonoBehaviour {
 	float startTime;
 	float journeyLength;
 
-	public RoadFinder roadFinder;
+
 	public TileMap tm;
+	public VehicleSpawn vs;
 	
 	// Use this for initialization
 	void Start () {
-		
-		roadFinder = GameObject.Find ("Controller").GetComponent<RoadFinder> ();
+	
+		vs = GameObject.Find ("Controller").GetComponent<VehicleSpawn> ();
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
+
+		randomX = Random.Range(0,24);
+		randomY = Random.Range(0,24);
 		
-		int randX = Random.Range (0, roadFinder.roadPieces.Length - 1);
+	//	int randX = Random.Range (0, roadFinder.roadPieces.Length - 1);
 		//		float randY = Random.Range (0, 100);
 		
 		startTime = Time.time;
 		startPosition = gameObject.transform.position;
 		tileX = (int)startPosition.x;
 		tileY = (int)startPosition.z;
-		endPosition = new Vector3 (roadFinder.roadPieces [randX].transform.position.x, 1, roadFinder.roadPieces [randX].transform.position.z);
+
+		GenerateEndPosition();
+
+		endPosition = new Vector3 (randomX, 1, randomY);
 
 
 		currentPath = tm.GeneratePathTo(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 
 		if(currentPath == null){
+//			vs.currentNumberOfVehicles--;
 			Destroy(gameObject);
+			
+
 		}
 		
 	}
@@ -64,6 +77,7 @@ public class Vehicle : MonoBehaviour {
 
 	public void MoveNextTile(){
 		if(currentPath == null){
+		//	vs.currentNumberOfVehicles--;
 			Destroy(gameObject);
 		}
 
@@ -79,9 +93,17 @@ public class Vehicle : MonoBehaviour {
 
 
 		if(currentPath.Count <= 1){
+			//vs.currentNumberOfVehicles--;
 			currentPath = null;
 			Destroy(gameObject);
 		}
 	}
 
+	void GenerateEndPosition(){
+
+		while(!tm.MovementAllowed(randomX, randomY)){
+			randomX = Random.Range(0,24);
+			randomY = Random.Range(0,24);
+		}
+	}
 }
