@@ -92,9 +92,9 @@ public class Vehicle : MonoBehaviour {
 
 	void GenerateEndPosition(){
 
-	//	while(!tm.MovementAllowed(randomX, randomY)){
+		while(!tm.MovementAllowed(randomX, randomY)){
 			randomX = Random.Range(0,24);
 			randomY = Random.Range(0,24);
-	//	}
+		}
 	}
 }	
