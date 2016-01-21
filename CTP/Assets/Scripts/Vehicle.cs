@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -14,18 +15,22 @@ public class Vehicle : MonoBehaviour {
 
 	Vector3 startPosition;
 	public Vector3 endPosition;
-	float speed = 1.0f;
+	float speed;
 	
 	float startTime;
 	float journeyLength;
 
 	public TileMap tm;
+	public VehicleSpawn vs;
 
 	
 	// Use this for initialization
 	void Start () {
 
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
+		vs = GameObject.Find("Controller").GetComponent<VehicleSpawn>();
+
+		speed = vs.speedSlider.value;
 
 		randomX = Random.Range(0,24);
 		randomY = Random.Range(0,24);
@@ -48,6 +53,7 @@ public class Vehicle : MonoBehaviour {
 	}
 
 	void Update(){
+		speed = vs.speedSlider.value;
 		MoveNextTile();
 	}
 

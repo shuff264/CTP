@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class VehicleSpawn : MonoBehaviour {
@@ -8,19 +9,23 @@ public class VehicleSpawn : MonoBehaviour {
 	int randomY;
 
 	public GameObject car;
-
+	public Slider spawnRateSlider;
+	public Slider speedSlider;
 	public TileMap tm;
 
 	void Start () {
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
+		spawnRateSlider.value = 100.0f;
+		speedSlider.value = 1.0f;
 	}
 
 	void Update () {
-		randomValue = Random.Range (0, 1000);	
-		randomX = Random.Range(0,24);
-		randomY = Random.Range(0,24);
+		randomValue = Random.Range (0, 1000);
 
-		if (randomValue < 100) {
+		randomX = Random.Range(0,tm.mapSizeX-1);
+		randomY = Random.Range(0,tm.mapSizeY-1);
+
+		if (randomValue < spawnRateSlider.value) {
 			if(tm.MovementAllowed(randomX, randomY)){
 				Instantiate(car, new Vector3(randomX, 1, randomY), Quaternion.identity);
 			}
