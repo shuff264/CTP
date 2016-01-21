@@ -44,7 +44,7 @@ public class Vehicle : MonoBehaviour {
 		if(currentPath == null){
 			Destroy(gameObject);
 		}
-		
+
 	}
 
 	void Update(){
@@ -69,6 +69,12 @@ public class Vehicle : MonoBehaviour {
 		float fracJourney = distCovered / journeyLength;
 		gameObject.transform.position = Vector3.Lerp (new Vector3(currentPath[0].x, 1, currentPath[0].y), new Vector3 (currentPath[1].x, 1, currentPath[1].y), fracJourney);
 
+		//ROTATION STUFF
+/*
+		Quaternion targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 1, currentPath[0].y) - transform.position);
+		float str = Mathf.Min (speed * Time.deltaTime, 1);
+		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);
+*/
 		if(gameObject.transform.position == new Vector3(currentPath[1].x, 1, currentPath[1].y)){
 			startTime = Time.time;
 			currentPath.RemoveAt(0);
