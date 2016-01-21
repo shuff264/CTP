@@ -19,7 +19,6 @@ public class Vehicle : MonoBehaviour {
 	float startTime;
 	float journeyLength;
 
-
 	public TileMap tm;
 
 	
@@ -57,10 +56,24 @@ public class Vehicle : MonoBehaviour {
 			Destroy(gameObject);
 		}
 
-		currentPath.RemoveAt(0);
+		//startPosition = new Vector3 (currentPath[0].x, 1, currentPath[0].y); 
+		//endPosition = new Vector3 (currentPath[1].x, 1, currentPath[1].y); 
 
-		transform.position = new Vector3(currentPath[0].x, 1, currentPath[0].y);
-	
+
+
+
+
+		journeyLength = Vector3.Distance (new Vector3(currentPath[0].x, 1, currentPath[0].y), new Vector3 (currentPath[1].x, 1, currentPath[1].y));
+
+		float distCovered = (Time.time - startTime) * speed;
+		float fracJourney = distCovered / journeyLength;
+		gameObject.transform.position = Vector3.Lerp (new Vector3(currentPath[0].x, 1, currentPath[0].y), new Vector3 (currentPath[1].x, 1, currentPath[1].y), fracJourney);
+
+		if(gameObject.transform.position == new Vector3(currentPath[1].x, 1, currentPath[1].y)){
+			startTime = Time.time;
+			currentPath.RemoveAt(0);
+		}
+
 
 		if(currentPath.Count <= 1){
 			currentPath = null;
