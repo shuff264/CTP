@@ -27,7 +27,7 @@ public class VehicleSpawn : MonoBehaviour {
 
 		if (randomValue < spawnRateSlider.value) {
 			if(tm.MovementAllowed(randomX, randomY)){
-				Instantiate(car, new Vector3(randomX, 1, randomY), Quaternion.identity);
+				Instantiate(car, new Vector3(randomX, 0.75f, randomY), Quaternion.identity);
 			}
 			else{
 				randomX = Random.Range(0,24);
