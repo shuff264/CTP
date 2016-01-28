@@ -19,7 +19,7 @@ public class TileMap : MonoBehaviour {
 	void Start() {
 		GenerateMapData();
 		CreatePathFindingGraph();
-		GenerateMapVisual();
+		CreateMapVisual();
 	}
 
 	void Update(){
@@ -140,7 +140,7 @@ public class TileMap : MonoBehaviour {
 		}
 	}
 
-	void GenerateMapVisual(){
+	void CreateMapVisual(){
 		//Create the map
 		for (int x = 0; x < mapSizeX; x++) {
 			for (int y = 0; y < mapSizeY; y++) {
@@ -161,7 +161,7 @@ public class TileMap : MonoBehaviour {
 	//PATHFINDING CODE BASED OFF PSEUDO CODE FOUND ON WIKIPIDIA
 	//https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 
-	public List<Node> GeneratePathTo(int startX, int startY, int endX, int endY){
+	public List<Node> FindPathToGoal(int startX, int startY, int endX, int endY){
 
 		//Creating dictionaries to hold pathfinding data
 		//dist holds the distance between nodes as a float

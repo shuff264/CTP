@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,7 +44,7 @@ public class Vehicle : MonoBehaviour {
 
 		endPosition = new Vector3 (randomX, 0.75f, randomY);
 
-		currentPath = tm.GeneratePathTo(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
+		currentPath = tm.FindPathToGoal(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 
 		if(currentPath == null){
 			Destroy(gameObject);
