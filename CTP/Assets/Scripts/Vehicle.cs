@@ -23,6 +23,10 @@ public class Vehicle : MonoBehaviour {
 	public TileMap tm;
 	public VehicleSpawn vs;
 
+	float maxSpeed;
+	float currentSpeed;
+	float acceleration;
+
 	
 	// Use this for initialization
 	void Start () {
@@ -49,6 +53,8 @@ public class Vehicle : MonoBehaviour {
 		if(currentPath == null){
 			Destroy(gameObject);
 		}
+
+
 
 	}
 
