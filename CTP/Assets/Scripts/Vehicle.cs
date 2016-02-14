@@ -15,7 +15,7 @@ public class Vehicle : MonoBehaviour {
 
 	Vector3 startPosition;
 	public Vector3 endPosition;
-	float speed = 0f;
+	public float speed = 0f;
 	
 	float startTime;
 	float journeyLength;
@@ -57,7 +57,7 @@ public class Vehicle : MonoBehaviour {
 
 	}
 
-	void Update(){
+	void FixedUpdate(){
 		maxSpeed = tm.tileTypes [tm.tiles[currentPath [0].x, currentPath [0].y]].maxSpeed;
 
 		if (speed <= maxSpeed) {
