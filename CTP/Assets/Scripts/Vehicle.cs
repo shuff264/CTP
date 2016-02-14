@@ -27,12 +27,13 @@ public class Vehicle : MonoBehaviour {
 	float currentSpeed;
 	float acceleration;
 
-	
+	Rigidbody rb;
 	// Use this for initialization
 	void Start () {
 
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
 		vs = GameObject.Find("Controller").GetComponent<VehicleSpawn>();
+		rb = gameObject.GetComponent<Rigidbody> ();
 
 		speed = vs.speedSlider.value;
 
@@ -71,8 +72,8 @@ public class Vehicle : MonoBehaviour {
 		//startPosition = new Vector3 (currentPath[0].x, 1, currentPath[0].y); 
 		//endPosition = new Vector3 (currentPath[1].x, 1, currentPath[1].y); 
 
-
-
+		//THIS SHOULD DO THE BETTER MOVEMENT
+		//rb.AddForce (transform.forward * speed);
 
 
 		journeyLength = Vector3.Distance (new Vector3(currentPath[0].x, 0.75f, currentPath[0].y), new Vector3 (currentPath[1].x, 0.75f, currentPath[1].y));
