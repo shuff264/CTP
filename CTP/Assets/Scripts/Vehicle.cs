@@ -15,7 +15,7 @@ public class Vehicle : MonoBehaviour {
 
 	Vector3 startPosition;
 	public Vector3 endPosition;
-	float speed;
+	float speed = 0f;
 	
 	float startTime;
 	float journeyLength;
@@ -23,9 +23,9 @@ public class Vehicle : MonoBehaviour {
 	public TileMap tm;
 	public VehicleSpawn vs;
 
-	float maxSpeed;
+	float maxSpeed = 0;
 	float currentSpeed;
-	float acceleration;
+	float acceleration = 0.2f;
 
 	Rigidbody rb;
 	// Use this for initialization
@@ -34,8 +34,6 @@ public class Vehicle : MonoBehaviour {
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
 		vs = GameObject.Find("Controller").GetComponent<VehicleSpawn>();
 		rb = gameObject.GetComponent<Rigidbody> ();
-
-		speed = vs.speedSlider.value;
 
 		randomX = Random.Range(0,24);
 		randomY = Random.Range(0,24);
@@ -60,7 +58,11 @@ public class Vehicle : MonoBehaviour {
 	}
 
 	void Update(){
-		speed = vs.speedSlider.value;
+		maxSpeed = tm.tileTypes [tm.tiles[currentPath [0].x, currentPath [0].y]].maxSpeed;
+
+		if (speed <= maxSpeed) {
+			speed += acceleration;
+		}
 		MoveNextTile();
 	}
 

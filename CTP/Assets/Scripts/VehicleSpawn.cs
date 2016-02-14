@@ -10,13 +10,12 @@ public class VehicleSpawn : MonoBehaviour {
 
 	public GameObject car;
 	public Slider spawnRateSlider;
-	public Slider speedSlider;
 	public TileMap tm;
 
 	void Start () {
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
 		spawnRateSlider.value = 100.0f;
-		speedSlider.value = 1.0f;
+
 	}
 
 	void Update () {
