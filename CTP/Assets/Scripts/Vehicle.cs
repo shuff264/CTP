@@ -84,7 +84,7 @@ public class Vehicle : MonoBehaviour {
 
 		//ROTATION STUFF
 
-		Quaternion targetRotation = Quaternion.LookRotation( transform.position - new Vector3(currentPath[0].x, 0.75f, currentPath[0].y));
+		Quaternion targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 0.75f, currentPath[0].y) - transform.position);
 		float str = Mathf.Min ((speed * 10) * Time.deltaTime, 1);
 
 		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);
