@@ -30,12 +30,15 @@ public class Vehicle : MonoBehaviour {
 	public Quaternion targetRotation;
 
 	Rigidbody rb;
+	LineRenderer lr;
 	// Use this for initialization
 	void Start () {
 
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
 		vs = GameObject.Find("Controller").GetComponent<VehicleSpawn>();
 		rb = gameObject.GetComponent<Rigidbody> ();
+		lr = gameObject.GetComponent<LineRenderer> ();
+
 
 		randomX = Random.Range(0,24);
 		randomY = Random.Range(0,24);
@@ -54,7 +57,17 @@ public class Vehicle : MonoBehaviour {
 		if(currentPath == null){
 			Destroy(gameObject);
 		}
+//		lr.enabled = false;
+		lr.SetColors(Color.red, Color.red);
+		lr.SetWidth(0.2F, 0.2F);
+		lr.SetVertexCount(currentPath.Count);
 
+
+		for(int i=0; i<=currentPath.Count; i++){
+			if(i != currentPath.Count){
+				lr.SetPosition(i, new Vector3(currentPath[i].x, 1, currentPath[i].y));
+			}
+		}
 
 
 	}
@@ -66,9 +79,10 @@ public class Vehicle : MonoBehaviour {
 			speed += acceleration;
 		}
 		MoveNextTile();
-//
-//		if (Input.GetKeyDown(KeyCode.Space))
-//			rb.velocity = new Vector3(0, 10, 0);
+		
+//		if (Input.GetKeyDown(KeyCode.Space)){
+//			lr.enabled = !lr.enabled;
+//		}
 	}
 
 	public void MoveNextTile(){
@@ -81,6 +95,8 @@ public class Vehicle : MonoBehaviour {
 
 		//THIS SHOULD DO THE BETTER MOVEMENT
 		//rb.AddForce (transform.forward * speed);
+
+	
 
 
 		journeyLength = Vector3.Distance (new Vector3(currentPath[0].x, 0, currentPath[0].y), new Vector3 (currentPath[1].x, 0, currentPath[1].y));
