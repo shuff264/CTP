@@ -7,6 +7,7 @@ public class GlobalVehicleControl : Singleton<GlobalVehicleControl> {
 	protected GlobalVehicleControl () {}
 
 	public List<Vehicle> cars = new List<Vehicle>();
+	public bool drawRoute = false;
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +16,8 @@ public class GlobalVehicleControl : Singleton<GlobalVehicleControl> {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log(cars.Count);
+		if(Input.GetKeyDown(KeyCode.Space)){
+			drawRoute = !drawRoute;
+		}
 	}
 }

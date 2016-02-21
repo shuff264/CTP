@@ -62,7 +62,7 @@ public class Vehicle : MonoBehaviour {
 			Destroy(gameObject);
 			
 		}
-//		lr.enabled = false;
+		lr.enabled = GlobalVehicleControl.Instance.drawRoute;
 		lr.SetColors(Color.red, Color.red);
 		lr.SetWidth(0.2F, 0.2F);
 		lr.SetVertexCount(currentPath.Count);
@@ -84,10 +84,8 @@ public class Vehicle : MonoBehaviour {
 			speed += acceleration;
 		}
 		MoveNextTile();
-		
-//		if (Input.GetKeyDown(KeyCode.Space)){
-//			lr.enabled = !lr.enabled;
-//		}
+		lr.enabled = GlobalVehicleControl.Instance.drawRoute;
+
 	}
 
 	public void MoveNextTile(){
