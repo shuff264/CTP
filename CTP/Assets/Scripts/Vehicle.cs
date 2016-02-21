@@ -27,6 +27,8 @@ public class Vehicle : MonoBehaviour {
 	float currentSpeed;
 	float acceleration = 0.2f;
 
+	public Quaternion targetRotation;
+
 	Rigidbody rb;
 	// Use this for initialization
 	void Start () {
@@ -45,7 +47,7 @@ public class Vehicle : MonoBehaviour {
 
 		GenerateEndPosition();
 
-		endPosition = new Vector3 (randomX, 0.75f, randomY);
+		endPosition = new Vector3 (randomX, 0, randomY);
 
 		currentPath = tm.FindPathToGoal(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 
@@ -64,6 +66,9 @@ public class Vehicle : MonoBehaviour {
 			speed += acceleration;
 		}
 		MoveNextTile();
+//
+//		if (Input.GetKeyDown(KeyCode.Space))
+//			rb.velocity = new Vector3(0, 10, 0);
 	}
 
 	public void MoveNextTile(){
@@ -78,24 +83,33 @@ public class Vehicle : MonoBehaviour {
 		//rb.AddForce (transform.forward * speed);
 
 
-		journeyLength = Vector3.Distance (new Vector3(currentPath[0].x, 0.75f, currentPath[0].y), new Vector3 (currentPath[1].x, 0.75f, currentPath[1].y));
+		journeyLength = Vector3.Distance (new Vector3(currentPath[0].x, 0, currentPath[0].y), new Vector3 (currentPath[1].x, 0, currentPath[1].y));
 
 		float distCovered = (Time.time - startTime) * speed;
 		float fracJourney = distCovered / journeyLength;
-		gameObject.transform.position = Vector3.Lerp (new Vector3(currentPath[0].x, 0.75f, currentPath[0].y), new Vector3 (currentPath[1].x, 0.75f, currentPath[1].y), fracJourney);
+		gameObject.transform.position = Vector3.Lerp (new Vector3(currentPath[0].x, 0, currentPath[0].y), new Vector3 (currentPath[1].x, 0, currentPath[1].y), fracJourney);
 
 		//ROTATION STUFF
 
-		Quaternion targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 0.75f, currentPath[0].y) - transform.position);
+		targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 0, currentPath[0].y) - transform.position);
 		float str = Mathf.Min ((speed * 10) * Time.deltaTime, 1);
+
+
 
 		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);
 
-		if(gameObject.transform.position == new Vector3(currentPath[1].x, 0.75f, currentPath[1].y)){
+
+//
+//		rb.AddForce(transform.forward * Time.deltaTime, ForceMode.Acceleration);
+//		//rb.AddTorque(targetDir);
+
+
+//
+		if(gameObject.transform.position == new Vector3(currentPath[1].x, 0, currentPath[1].y)){
 			startTime = Time.time;
 			currentPath.RemoveAt(0);
 		}
-
+	
 
 
 		if(currentPath.Count <= 1){

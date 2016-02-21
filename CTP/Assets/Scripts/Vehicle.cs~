@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ public class Vehicle : MonoBehaviour {
 
 	Vector3 startPosition;
 	public Vector3 endPosition;
-	float speed;
+	public float speed = 0f;
 	
 	float startTime;
 	float journeyLength;
@@ -23,14 +23,19 @@ public class Vehicle : MonoBehaviour {
 	public TileMap tm;
 	public VehicleSpawn vs;
 
-	
+	float maxSpeed = 0;
+	float currentSpeed;
+	float acceleration = 0.2f;
+
+	public Quaternion targetRotation;
+
+	Rigidbody rb;
 	// Use this for initialization
 	void Start () {
 
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
 		vs = GameObject.Find("Controller").GetComponent<VehicleSpawn>();
-
-		speed = vs.speedSlider.value;
+		rb = gameObject.GetComponent<Rigidbody> ();
 
 		randomX = Random.Range(0,24);
 		randomY = Random.Range(0,24);
@@ -42,19 +47,28 @@ public class Vehicle : MonoBehaviour {
 
 		GenerateEndPosition();
 
-		endPosition = new Vector3 (randomX, 0.75f, randomY);
+		endPosition = new Vector3 (randomX, 0, randomY);
 
-		currentPath = tm.GeneratePathTo(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
+		currentPath = tm.FindPathToGoal(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 
 		if(currentPath == null){
 			Destroy(gameObject);
 		}
 
+
+
 	}
 
-	void Update(){
-		speed = vs.speedSlider.value;
+	void FixedUpdate(){
+		maxSpeed = tm.tileTypes [tm.tiles[currentPath [0].x, currentPath [0].y]].maxSpeed;
+
+		if (speed <= maxSpeed) {
+			speed += acceleration;
+		}
 		MoveNextTile();
+//
+//		if (Input.GetKeyDown(KeyCode.Space))
+//			rb.velocity = new Vector3(0, 10, 0);
 	}
 
 	public void MoveNextTile(){
@@ -65,28 +79,41 @@ public class Vehicle : MonoBehaviour {
 		//startPosition = new Vector3 (currentPath[0].x, 1, currentPath[0].y); 
 		//endPosition = new Vector3 (currentPath[1].x, 1, currentPath[1].y); 
 
+		//THIS SHOULD DO THE BETTER MOVEMENT
+		//rb.AddForce (transform.forward * speed);
 
 
-
-
-		journeyLength = Vector3.Distance (new Vector3(currentPath[0].x, 0.75f, currentPath[0].y), new Vector3 (currentPath[1].x, 0.75f, currentPath[1].y));
-
-		float distCovered = (Time.time - startTime) * speed;
-		float fracJourney = distCovered / journeyLength;
-		gameObject.transform.position = Vector3.Lerp (new Vector3(currentPath[0].x, 0.75f, currentPath[0].y), new Vector3 (currentPath[1].x, 0.75f, currentPath[1].y), fracJourney);
+//		journeyLength = Vector3.Distance (new Vector3(currentPath[0].x, 0, currentPath[0].y), new Vector3 (currentPath[1].x, 0, currentPath[1].y));
+//
+//		float distCovered = (Time.time - startTime) * speed;
+//		float fracJourney = distCovered / journeyLength;
+//		gameObject.transform.position = Vector3.Lerp (new Vector3(currentPath[0].x, 0, currentPath[0].y), new Vector3 (currentPath[1].x, 0, currentPath[1].y), fracJourney);
 
 		//ROTATION STUFF
 
-		Quaternion targetRotation = Quaternion.LookRotation( transform.position - new Vector3(currentPath[0].x, 0.75f, currentPath[0].y));
+		targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 0, currentPath[0].y) - transform.position);
 		float str = Mathf.Min ((speed * 10) * Time.deltaTime, 1);
+
+
 
 		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);
 
-		if(gameObject.transform.position == new Vector3(currentPath[1].x, 0.75f, currentPath[1].y)){
+
+
+		rb.AddForce(transform.forward * Time.deltaTime, ForceMode.Acceleration);
+		//rb.AddTorque(targetDir);
+
+
+//
+//		if(gameObject.transform.position == new Vector3(currentPath[1].x, 0, currentPath[1].y)){
+//			startTime = Time.time;
+//			currentPath.RemoveAt(0);
+//		}
+
+		if(Vector3.Distance(gameObject.transform.position, new Vector3(currentPath[1].x, 0, currentPath[1].y)) < new Vector3(0.5,0.5,0.5)){
 			startTime = Time.time;
 			currentPath.RemoveAt(0);
 		}
-
 
 
 		if(currentPath.Count <= 1){
