@@ -11,6 +11,7 @@ public class Vehicle : MonoBehaviour {
 	int randomX;
 	int randomY;
 
+
 	public List<Node> currentPath = null;
 
 	Vector3 startPosition;
@@ -33,7 +34,7 @@ public class Vehicle : MonoBehaviour {
 	LineRenderer lr;
 	// Use this for initialization
 	void Start () {
-
+		
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
 		vs = GameObject.Find("Controller").GetComponent<VehicleSpawn>();
 		rb = gameObject.GetComponent<Rigidbody> ();
