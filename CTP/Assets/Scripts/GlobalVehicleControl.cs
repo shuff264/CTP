@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GlobalVehicleControl : Singleton<GlobalVehicleControl> {
 
 	protected GlobalVehicleControl () {}
 
-
+	public List<Vehicle> cars = new List<Vehicle>();
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +15,6 @@ public class GlobalVehicleControl : Singleton<GlobalVehicleControl> {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		Debug.Log(cars.Count);
 	}
 }

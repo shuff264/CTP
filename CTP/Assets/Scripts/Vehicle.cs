@@ -34,7 +34,9 @@ public class Vehicle : MonoBehaviour {
 	LineRenderer lr;
 	// Use this for initialization
 	void Start () {
-		
+
+		GlobalVehicleControl.Instance.cars.Add(this);
+
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
 		vs = GameObject.Find("Controller").GetComponent<VehicleSpawn>();
 		rb = gameObject.GetComponent<Rigidbody> ();
@@ -56,7 +58,9 @@ public class Vehicle : MonoBehaviour {
 		currentPath = tm.FindPathToGoal(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 
 		if(currentPath == null){
+			GlobalVehicleControl.Instance.cars.Remove(this);
 			Destroy(gameObject);
+			
 		}
 //		lr.enabled = false;
 		lr.SetColors(Color.red, Color.red);
@@ -88,6 +92,7 @@ public class Vehicle : MonoBehaviour {
 
 	public void MoveNextTile(){
 		if(currentPath == null){
+			GlobalVehicleControl.Instance.cars.Remove(this);
 			Destroy(gameObject);
 		}
 
@@ -131,6 +136,7 @@ public class Vehicle : MonoBehaviour {
 
 		if(currentPath.Count <= 1){
 			currentPath = null;
+			GlobalVehicleControl.Instance.cars.Remove(this);
 			Destroy(gameObject);
 		}
 	}
