@@ -85,9 +85,6 @@ public class Vehicle : MonoBehaviour {
 		//		rb.AddForce(transform.forward * Time.deltaTime, ForceMode.Acceleration);
 		//		//rb.AddTorque(targetDir);
 
-	
-
-
 		journeyLength = Vector3.Distance (new Vector3(currentPath[0].x, 0, currentPath[0].y), new Vector3 (currentPath[1].x, 0, currentPath[1].y));
 
 		float distCovered = (Time.time - startTime) * speed;
@@ -108,8 +105,6 @@ public class Vehicle : MonoBehaviour {
 			currentPath.RemoveAt(0);
 		}
 	
-
-
 		if(currentPath.Count <= 1){
 			DestroyVehicle();
 		}
@@ -142,5 +137,5 @@ public class Vehicle : MonoBehaviour {
 		GlobalVehicleControl.Instance.cars.Remove(this);
 		Destroy(gameObject);
 	}
-	
+
 }	
