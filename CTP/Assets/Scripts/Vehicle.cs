@@ -26,6 +26,8 @@ public class Vehicle : MonoBehaviour {
 	float maxSpeed = 0;
 	float acceleration = 0.2f;
 	Vector3 modelOffset;
+	float lastRot = 0;
+	float thisRot;
 
 	Rigidbody rb;
 	LineRenderer lr;
@@ -144,6 +146,7 @@ public class Vehicle : MonoBehaviour {
 		//Speed is influenced by; max speed, acceleration, whether they are turning, traffic lights, vehicles that are in front
 
 		speed += (Accelerate() + Turning() + Distance());
+
 	}
 
 	float Accelerate(){
@@ -161,7 +164,16 @@ public class Vehicle : MonoBehaviour {
 //				else
 //					return 0
 
-		return 0;
+
+//		thisRot = gameObject.transform.rotation.y;
+//
+//		if(thisRot != lastRot){
+//			return -0.5f;
+//		}
+//
+//		lastRot = thisRot;
+//
+//		return 0;
 
 	}
 
