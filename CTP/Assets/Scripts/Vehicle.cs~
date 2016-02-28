@@ -141,7 +141,7 @@ public class Vehicle : MonoBehaviour {
 	void AdjustSpeed(){
 		//Speed is influenced by; max speed, acceleration, whether they are turning, traffic lights, vehicles that are in front
 
-		speed += Accelerate();
+		speed += (Accelerate() + Turning() + Distance());
 	}
 
 	float Accelerate(){
@@ -151,6 +151,25 @@ public class Vehicle : MonoBehaviour {
 		else{
 			return 0;
 		}
+	}
+
+	float Turning(){
+//		if we ar turning
+//			return -0.2
+//				else
+//					return 0
+
+		return 0;
+
+	}
+
+	float Distance(){
+//		if object is in front
+//			return negative value scaled to distance and there velocity away
+//				else
+//					return 0
+		return 0;
+
 	}
 
 
