@@ -168,6 +168,20 @@ public class Vehicle : MonoBehaviour {
 //			return negative value scaled to distance and there velocity away
 //				else
 //					return 0
+
+//		use a raycast a certain distance in front scale speed based on that
+
+		RaycastHit hit;
+		Ray distanceRay = new Ray(transform.position, Vector3.forward);
+
+		Debug.DrawRay(transform.position, Vector3.forward * 5);
+
+		if(Physics.Raycast(distanceRay, out hit, 5)){
+			if(hit.collider.tag == "car"){
+				Debug.Log("hit");
+				return 0;
+			}
+		}
 		return 0;
 
 	}
