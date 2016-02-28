@@ -176,9 +176,9 @@ public class Vehicle : MonoBehaviour {
 		RaycastHit hit;
 		Ray distanceRay = new Ray(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward);
 
-		Debug.DrawRay(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward * 5);
+		Debug.DrawRay(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward * 2);
 
-		if(Physics.Raycast(distanceRay, out hit, 3)){
+		if(Physics.Raycast(distanceRay, out hit, 2)){
 			if(hit.collider.tag == "car"){
 				return -(hit.distance / 10);
 			}else{
