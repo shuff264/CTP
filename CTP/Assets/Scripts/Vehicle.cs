@@ -62,9 +62,9 @@ public class Vehicle : MonoBehaviour {
 	void FixedUpdate(){
 		maxSpeed = tm.tileTypes [tm.tiles[currentPath [0].x, currentPath [0].y]].maxSpeed;
 
-		if (speed <= maxSpeed) {
-			speed += acceleration;
-		}
+		AdjustSpeed();
+
+
 		MoveNextTile();
 		lr.enabled = GlobalVehicleControl.Instance.drawRoute;
 
@@ -137,5 +137,21 @@ public class Vehicle : MonoBehaviour {
 		GlobalVehicleControl.Instance.cars.Remove(this);
 		Destroy(gameObject);
 	}
+
+	void AdjustSpeed(){
+		//Speed is influenced by; max speed, acceleration, whether they are turning, traffic lights, vehicles that are in front
+
+		speed += Accelerate();
+	}
+
+	float Accelerate(){
+		if (speed <= maxSpeed) {
+			return acceleration;
+		}
+		else{
+			return 0;
+		}
+	}
+
 
 }	
