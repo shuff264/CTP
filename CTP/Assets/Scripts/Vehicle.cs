@@ -174,20 +174,19 @@ public class Vehicle : MonoBehaviour {
 //		use a raycast a certain distance in front scale speed based on that
 
 		RaycastHit hit;
-		Ray distanceRay = new Ray(transform.position + modelOffset, this.transform.forward);
+		Ray distanceRay = new Ray(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward);
 
 		Debug.DrawRay(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward * 5);
 
-		if(Physics.Raycast(distanceRay, out hit, 5)){
+		if(Physics.Raycast(distanceRay, out hit, 3)){
 			if(hit.collider.tag == "car"){
-				Debug.Log("hit a car");
+				return -(hit.distance / 10);
+			}else{
 				return 0;
 			}
+		}else{
 			return 0;
-			
 		}
-		return 0;
-
 	}
 
 
