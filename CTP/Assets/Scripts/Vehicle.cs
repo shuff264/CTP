@@ -180,7 +180,8 @@ public class Vehicle : MonoBehaviour {
 
 		if(Physics.Raycast(distanceRay, out hit, 2)){
 			if(hit.collider.tag == "car"){
-				return -(hit.distance / 10);
+				Debug.Log(-(hit.distance/5));
+				return -(hit.distance / 5);
 			}else{
 				return 0;
 			}
