@@ -25,7 +25,7 @@ public class Vehicle : MonoBehaviour {
 
 	float maxSpeed = 0;
 	float acceleration = 0.2f;
-
+	Vector3 modelOffset;
 
 	Rigidbody rb;
 	LineRenderer lr;
@@ -40,6 +40,8 @@ public class Vehicle : MonoBehaviour {
 
 		randomX = Random.Range(0,24);
 		randomY = Random.Range(0,24);
+
+		modelOffset = new Vector3(0.3f, 0.6f, 0f);
 		
 		startTime = Time.time;
 		startPosition = gameObject.transform.position;
@@ -172,15 +174,17 @@ public class Vehicle : MonoBehaviour {
 //		use a raycast a certain distance in front scale speed based on that
 
 		RaycastHit hit;
-		Ray distanceRay = new Ray(transform.position, Vector3.forward);
+		Ray distanceRay = new Ray(transform.position + modelOffset, this.transform.forward);
 
-		Debug.DrawRay(transform.position, Vector3.forward * 5);
+		Debug.DrawRay(transform.position + modelOffset, Vector3.forward * 5);
 
 		if(Physics.Raycast(distanceRay, out hit, 5)){
 			if(hit.collider.tag == "car"){
-				Debug.Log("hit");
+				Debug.Log("hit a car");
 				return 0;
 			}
+			return 0;
+			
 		}
 		return 0;
 
