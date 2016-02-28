@@ -100,7 +100,7 @@ public class Vehicle : MonoBehaviour {
 
 
 
-		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);
+		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);	
 
 		if(gameObject.transform.position == new Vector3(currentPath[1].x, 0, currentPath[1].y)){
 			startTime = Time.time;
@@ -169,14 +169,14 @@ public class Vehicle : MonoBehaviour {
 //		if object is in front
 //			return negative value scaled to distance and there velocity away
 //				else
-//					return 0
+//					return 0	
 
 //		use a raycast a certain distance in front scale speed based on that
 
 		RaycastHit hit;
 		Ray distanceRay = new Ray(transform.position + modelOffset, this.transform.forward);
 
-		Debug.DrawRay(transform.position + modelOffset, Vector3.forward * 5);
+		Debug.DrawRay(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward * 5);
 
 		if(Physics.Raycast(distanceRay, out hit, 5)){
 			if(hit.collider.tag == "car"){
