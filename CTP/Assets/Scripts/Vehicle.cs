@@ -173,7 +173,7 @@ public class Vehicle : MonoBehaviour {
 //
 //		lastRot = thisRot;
 //
-//		return 0;
+		return 0;
 
 	}
 
@@ -184,7 +184,7 @@ public class Vehicle : MonoBehaviour {
 //					return 0	
 
 //		use a raycast a certain distance in front scale speed based on that
-
+		float maxReduce = 0.2f;
 		RaycastHit hit;
 		Ray distanceRay = new Ray(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward);
 
@@ -192,13 +192,19 @@ public class Vehicle : MonoBehaviour {
 
 		if(Physics.Raycast(distanceRay, out hit, 2)){
 			if(hit.collider.tag == "car"){
-				Debug.Log(-(hit.distance/5));
-				return -(hit.distance / 5);
+				//Debug.Log(-(hit.distance/10));
+				return -(maxReduce - hit.distance / 10);
 			}else{
 				return 0;
 			}
 		}else{
 			return 0;
+		}
+	}
+
+	void OnCollisionEnter(Collision coll){
+		if (coll.gameObject.tag == "car") {
+			Debug.Log("Overlap Fail");
 		}
 	}
 
