@@ -258,49 +258,25 @@ public class TileMap : MonoBehaviour {
 		return currentPath;
 	}
 
-	//Function to allow for the placement of roads
-	public void PlaceRoad(int x, int y){
-		//Sets the tile type at the position to 1(ROAD)
-		tiles [x, y] = 1;
+	public void PlaceTile(int x, int y, int type){
+		tiles[x, y] = type;
 
 		//Destroys tile in that position and creates a new one of the new type
 		TileType tt = tileTypes[tiles[x,y]];
 		Destroy (tilesGrid [x, y]);
 		tilesGrid [x, y] = (GameObject)Instantiate (tt.tilePrefab, new Vector3 (x, 0, y), Quaternion.identity);
-
+		
 		//Sets values on the tile
 		RoadPlacement rp = tilesGrid[x,y].GetComponent<RoadPlacement>();
 		rp.tileX = x;
 		rp.tileY = y;
 		rp.map = this;
-
+		
 		//Sets values on the tile
 		TileData td = tilesGrid[x,y].GetComponent<TileData>();
 		td.tileX = x;
 		td.tileY = y;
 		td.map = this;
-	}
 
-	//Function to allow for the placement of grass
-	public void PlaceGrass(int x, int y){
-		//Sets the tile type at the position to 0(GRASS)
-		tiles [x, y] = 0;
-
-		//Destroys tile in that position and creates a new one of the new type
-		TileType tt = tileTypes[tiles[x,y]];
-		Destroy (tilesGrid [x, y]);
-		tilesGrid [x, y] = (GameObject)Instantiate (tt.tilePrefab, new Vector3 (x, 0, y), Quaternion.identity);
-
-		//Sets values on the tile
-		RoadPlacement rp = tilesGrid[x,y].GetComponent<RoadPlacement>();
-		rp.tileX = x;
-		rp.tileY = y;
-		rp.map = this;
-
-		//Sets values on the tile
-		TileData td = tilesGrid[x,y].GetComponent<TileData>();
-		td.tileX = x;
-		td.tileY = y;
-		td.map = this;
 	}
 }

@@ -10,16 +10,7 @@ public class RoadPlacement : MonoBehaviour {
 
 	void OnMouseOver(){
 		if(Input.GetMouseButton(0)){
-			if(UIController.Instance.placeType == 0){
-				map.PlaceGrass (tileX, tileY);
-			}else if(UIController.Instance.placeType == 1){
-				map.PlaceRoad(tileX, tileY);
-			}else if(UIController.Instance.placeType == 2){
-				//map.PlaceRoad(tileX, tileY);
-				Debug.Log("Lights not set up yet");
-			}else{
-				Debug.Log("ERROR: VALUE NOT RECOGNISED");
-			}
+			map.PlaceTile(tileX, tileY, UIController.Instance.placeType);
 		}
 	}
 }
