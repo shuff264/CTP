@@ -9,13 +9,17 @@ public class RoadPlacement : MonoBehaviour {
 	public TileMap map;
 
 	void OnMouseOver(){
-		//0 = LEFT CLICK = ROAD
-		//1 = RIGHT CLICK = GRASS
-		if(Input.GetMouseButton(0)){
-			map.PlaceRoad (tileX, tileY);
-		}
-		else if(Input.GetMouseButton(1)){
-			map.PlaceGrass(tileX, tileY);
+		if(Input.GetMouseButtonDown(0)){
+			if(UIController.Instance.placeType == 0){
+				map.PlaceGrass (tileX, tileY);
+			}else if(UIController.Instance.placeType == 1){
+				map.PlaceRoad(tileX, tileY);
+			}else if(UIController.Instance.placeType == 2){
+				//map.PlaceRoad(tileX, tileY);
+				Debug.Log("Lights not set up yet");
+			}else{
+				Debug.Log("ERROR: VALUE NOT RECOGNISED");
+			}
 		}
 	}
 }

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class UIController : Singleton<UIController> {
 
+	public int placeType = 0;
+
 	// Use this for initialization
 	void Start () {
 	
@@ -13,17 +15,15 @@ public class UIController : Singleton<UIController> {
 	
 	}
 
-	public void OnClickRoad(){
-		Debug.Log("Road");
+	public void OnClickGrass(){
+		placeType = 0;
 	}
 
-	public void OnClickGrass(){
-		Debug.Log("Grass");
-		
+	public void OnClickRoad(){
+		placeType = 1;
 	}
 
 	public void OnClickLights(){
-		Debug.Log("Lights");
-		
+		placeType = 2;
 	}
 }
