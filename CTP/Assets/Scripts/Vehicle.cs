@@ -16,7 +16,7 @@ public class Vehicle : MonoBehaviour {
 
 	Vector3 startPosition;
 	public Vector3 endPosition;
-	public float speed = 0f;
+	public float speed = 0.1f;
 	
 	float startTime;
 	float journeyLength;
@@ -67,7 +67,7 @@ public class Vehicle : MonoBehaviour {
 		maxSpeed = tm.tileTypes [tm.tiles[currentPath [0].x, currentPath [0].y]].maxSpeed;
 
 		AdjustSpeed();
-
+		
 
 		MoveNextTile();
 		lr.enabled = GlobalVehicleControl.Instance.drawRoute;
@@ -184,16 +184,15 @@ public class Vehicle : MonoBehaviour {
 //					return 0	
 
 //		use a raycast a certain distance in front scale speed based on that
-		float maxReduce = 0.2f;
+		float maxReduce = 1f;
 		RaycastHit hit;
 		Ray distanceRay = new Ray(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward);
 
 		Debug.DrawRay(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward * 2);
 
 		if(Physics.Raycast(distanceRay, out hit, 2)){
-			if(hit.collider.tag == "car"){
-				//Debug.Log(-(hit.distance/10));
-				return -(maxReduce - hit.distance / 10);
+			if(hit.collider.tag == "car" || hit.collider.tag == "lights"){
+				return -(maxReduce - hit.distance /2 );
 			}else{
 				return 0;
 			}
@@ -203,9 +202,7 @@ public class Vehicle : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision coll){
-		if (coll.gameObject.tag == "car") {
-			Debug.Log("Overlap Fail");
-		}
+
 	}
 
 
