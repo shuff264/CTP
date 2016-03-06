@@ -66,7 +66,11 @@ public class Vehicle : MonoBehaviour {
 	void FixedUpdate(){
 		maxSpeed = tm.tileTypes [tm.tiles[currentPath [0].x, currentPath [0].y]].maxSpeed;
 
-		AdjustSpeed();
+		Ray distanceRay = new Ray(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward);
+		
+		Debug.DrawRay(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward * 2);
+
+		AdjustSpeed(distanceRay);
 		
 
 		MoveNextTile();
@@ -142,11 +146,12 @@ public class Vehicle : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	void AdjustSpeed(){
+	void AdjustSpeed(Ray distanceRay){
 		//Speed is influenced by; max speed, acceleration, whether they are turning, traffic lights, vehicles that are in front
-
-		speed += (Accelerate() + Turning() + Distance());
-
+		speed += Accelerate();
+		if(speed >= 0){
+			 speed += (Turning() + Distance( distanceRay));
+		}
 	}
 
 	float Accelerate(){
@@ -177,7 +182,7 @@ public class Vehicle : MonoBehaviour {
 
 	}
 
-	float Distance(){
+	float Distance(Ray distanceRay){
 //		if object is in front
 //			return negative value scaled to distance and there velocity away
 //				else
@@ -186,9 +191,7 @@ public class Vehicle : MonoBehaviour {
 //		use a raycast a certain distance in front scale speed based on that
 		float maxReduce = 1f;
 		RaycastHit hit;
-		Ray distanceRay = new Ray(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward);
-
-		Debug.DrawRay(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward * 2);
+		
 
 		if(Physics.Raycast(distanceRay, out hit, 2)){
 			if(hit.collider.tag == "car" || hit.collider.tag == "lights"){
