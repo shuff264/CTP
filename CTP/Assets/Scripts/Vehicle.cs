@@ -60,7 +60,7 @@ public class Vehicle : MonoBehaviour {
 		}
 
 		SetUpLineRender();
-
+		
 	}
 
 	void FixedUpdate(){
@@ -189,7 +189,7 @@ public class Vehicle : MonoBehaviour {
 //					return 0	
 
 //		use a raycast a certain distance in front scale speed based on that
-		float maxReduce = 1f;
+		float maxReduce = 2f;
 		RaycastHit hit;
 		
 
