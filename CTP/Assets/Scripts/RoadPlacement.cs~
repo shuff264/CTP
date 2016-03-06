@@ -9,7 +9,7 @@ public class RoadPlacement : MonoBehaviour {
 	public TileMap map;
 
 	void OnMouseOver(){
-		if(Input.GetMouseButtonDown(0)){
+		if(Input.GetMouseButton(0)){
 			if(UIController.Instance.placeType == 0){
 				map.PlaceGrass (tileX, tileY);
 			}else if(UIController.Instance.placeType == 1){
