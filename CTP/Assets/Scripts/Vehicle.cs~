@@ -148,10 +148,17 @@ public class Vehicle : MonoBehaviour {
 
 	void AdjustSpeed(Ray distanceRay){
 		//Speed is influenced by; max speed, acceleration, whether they are turning, traffic lights, vehicles that are in front
-		speed += Accelerate();
-		if(speed >= 0){
-			 speed += (Turning() + Distance( distanceRay));
+
+		if((speed += (Accelerate() + Turning() + Distance(distanceRay))) <0){
+			speed = 0;
+		}else{
+			speed += (Accelerate() + Turning() + Distance(distanceRay));
 		}
+
+//		speed += Accelerate();
+//		if(speed >= 0){
+//			 speed += (Turning() + Distance( distanceRay));
+//		}
 	}
 
 	float Accelerate(){
