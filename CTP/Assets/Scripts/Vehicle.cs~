@@ -63,7 +63,7 @@ public class Vehicle : MonoBehaviour {
 		
 	}
 
-	void Update(){
+	void FixedUpdate(){
 		maxSpeed = tm.tileTypes [tm.tiles[currentPath [0].x, currentPath [0].y]].maxSpeed;
 
 		Ray distanceRay = new Ray(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward);
@@ -148,22 +148,15 @@ public class Vehicle : MonoBehaviour {
 
 	void AdjustSpeed(Ray distanceRay){
 		//Speed is influenced by; max speed, acceleration, whether they are turning, traffic lights, vehicles that are in front
-		speed += (Accelerate(distanceRay)+Turning() + Distance( distanceRay)) * Time.deltaTime;;
-		//if(speed >= 0){
-			// speed += (Turning() + Distance( distanceRay));
-		
+		speed += Accelerate();
+		if(speed >= 0){
+			 speed += (Turning() + Distance( distanceRay));
+		}
 	}
 
-	float Accelerate(Ray distanceRay){
-
-		RaycastHit hit;
-
+	float Accelerate(){
 		if (speed <= maxSpeed) {
-			if(Physics.Raycast(distanceRay, out hit, 2)){
-				return 0;
-			}else{
-				return acceleration;
-			}
+			return acceleration;
 		}
 		else{
 			return 0;
