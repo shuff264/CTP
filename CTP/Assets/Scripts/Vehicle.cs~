@@ -11,12 +11,12 @@ public class Vehicle : MonoBehaviour {
 	int randomX;
 	int randomY;
 
-
+	[SerializeField]
 	public List<Node> currentPath = null;
 
 	Vector3 startPosition;
 	public Vector3 endPosition;
-	public float speed = 0.1f;
+	public float speed = 0.02f;
 	
 	float startTime;
 	float journeyLength;
@@ -70,7 +70,7 @@ public class Vehicle : MonoBehaviour {
 		
 		Debug.DrawRay(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward * 2);
 
-		AdjustSpeed(distanceRay);
+		//AdjustSpeed(distanceRay);
 		
 
 		MoveNextTile();
@@ -93,22 +93,22 @@ public class Vehicle : MonoBehaviour {
 		//		rb.AddForce(transform.forward * Time.deltaTime, ForceMode.Acceleration);
 		//		//rb.AddTorque(targetDir);
 
-		journeyLength = Vector3.Distance (new Vector3(currentPath[0].x, 0, currentPath[0].y), new Vector3 (currentPath[1].x, 0, currentPath[1].y));
+		journeyLength = Vector3.Distance (new Vector3(currentPath[0].x, 1, currentPath[0].y), new Vector3 (currentPath[1].x, 1, currentPath[1].y));
 
 		float distCovered = (Time.time - startTime) * speed;
 		float fracJourney = distCovered / journeyLength;
-		gameObject.transform.position = Vector3.Lerp (new Vector3(currentPath[0].x, 0, currentPath[0].y), new Vector3 (currentPath[1].x, 0, currentPath[1].y), fracJourney);
+		gameObject.transform.position = Vector3.Lerp (new Vector3(currentPath[0].x, 1, currentPath[0].y), new Vector3 (currentPath[1].x, 1, currentPath[1].y), fracJourney);
 
 		//ROTATION STUFF
 		Quaternion targetRotation;
-		targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 0, currentPath[0].y) - transform.position);
+		targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 1, currentPath[0].y) - transform.position);
 		float str = Mathf.Min ((speed * 10) * Time.deltaTime, 1);
 
 
 
 		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);	
 
-		if(gameObject.transform.position == new Vector3(currentPath[1].x, 0, currentPath[1].y)){
+		if(gameObject.transform.position == new Vector3(currentPath[0].x, 1, currentPath[0].y)){
 			startTime = Time.time;
 			currentPath.RemoveAt(0);
 		}
