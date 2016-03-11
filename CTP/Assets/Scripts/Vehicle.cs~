@@ -99,14 +99,11 @@ public class Vehicle : MonoBehaviour {
 		float fracJourney = distCovered / journeyLength;
 		gameObject.transform.position = Vector3.Lerp (new Vector3(currentPath[0].x, 0, currentPath[0].y), new Vector3 (currentPath[1].x, 0, currentPath[1].y), fracJourney);
 
-		//ROTATION STUFF
-		Quaternion targetRotation;
-		targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 0, currentPath[0].y) - transform.position);
-		float str = Mathf.Min ((speed * 10) * Time.deltaTime, 1);
+		if(speed > 0){
+			RotateVehicle();
+		}
 
 
-
-		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);	
 
 		if(gameObject.transform.position == new Vector3(currentPath[1].x, 0, currentPath[1].y)){
 			startTime = Time.time;
@@ -116,6 +113,14 @@ public class Vehicle : MonoBehaviour {
 		if(currentPath.Count <= 1){
 			DestroyVehicle();
 		}
+	}
+
+	void RotateVehicle(){
+		Quaternion targetRotation;
+		targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 0, currentPath[0].y) - transform.position);
+		float str = Mathf.Min ((speed * 10) * Time.deltaTime, 1);
+
+		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);	
 	}
 
 	void GenerateEndPosition(){
@@ -200,9 +205,9 @@ public class Vehicle : MonoBehaviour {
 		RaycastHit hit;
 		
 
-		if(Physics.Raycast(distanceRay, out hit, 2)){
+		if(Physics.Raycast(distanceRay, out hit, 1)){
 			if(hit.collider.tag == "car" || hit.collider.tag == "lights"){
-				return -(maxReduce - hit.distance /2 );
+				return -(maxReduce - hit.distance );
 			}else{
 				return 0;
 			}
