@@ -3,14 +3,17 @@ using System.Collections;
 
 public class TrafficLights : MonoBehaviour {
 
-	public bool xGreen = true;
-	public bool zGreen = false;
+	public bool xGreen;
+	public bool zGreen;
 
-	float timeOnGreen = 10f;
+	float timeOnGreen;
 	float timePassedOnGreen = 0f;
 
 	// Use this for initialization
 	void Awake () {
+		timeOnGreen = Random.Range(5, 15);
+		xGreen = returnBoolean();
+		zGreen = !xGreen;
 
 	}
 	
@@ -23,5 +26,10 @@ public class TrafficLights : MonoBehaviour {
 		}
 
 		timePassedOnGreen += Time.deltaTime;
+	}
+
+	bool returnBoolean(){
+
+		return (Random.value > 0.5f);
 	}
 }
