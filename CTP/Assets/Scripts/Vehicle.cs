@@ -206,8 +206,30 @@ public class Vehicle : MonoBehaviour {
 		
 
 		if(Physics.Raycast(distanceRay, out hit, 1)){
-			if(hit.collider.tag == "car" || hit.collider.tag == "lights"){
+			if(hit.collider.tag == "car"){
 				return -(maxReduce - hit.distance );
+			}else if(hit.collider.tag == "lights"){
+				if(gameObject.transform.position.x == hit.transform.position.x){
+					if(hit.transform.GetComponent<TrafficLights>().xGreen == true){
+						return -(maxReduce - hit.distance );
+					} else if(hit.transform.GetComponent<TrafficLights>().zGreen == true){
+						return 0;
+					}
+					else{
+						return 0;
+					}
+				}else if(gameObject.transform.position.z == hit.transform.position.z){
+					if(hit.transform.GetComponent<TrafficLights>().xGreen == true){
+						return 0;
+					} else if(hit.transform.GetComponent<TrafficLights>().zGreen == true){
+						return -(maxReduce - hit.distance );
+					}
+					else{
+						return 0;
+					}
+				} else {
+					return 0;
+				}
 			}else{
 				return 0;
 			}
