@@ -213,7 +213,7 @@ public class Vehicle : MonoBehaviour {
 					if(hit.transform.GetComponent<TrafficLights>().xGreen == true){
 						return -(maxReduce - hit.distance );
 					} else if(hit.transform.GetComponent<TrafficLights>().zGreen == true){
-						return 0;
+						return 0;	
 					}
 					else{
 						return 0;
