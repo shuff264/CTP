@@ -53,8 +53,10 @@ public class Vehicle : MonoBehaviour {
 		//Need to ditch this
 		GenerateEndPosition();
 
-		currentPath = tm.FindPathToGoal(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
+		//currentPath = tm.DijkstraSearch(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
+		currentPath = tm.AStarSearch(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 		
+
 		if(currentPath == null){
 			DestroyVehicle();
 		}
