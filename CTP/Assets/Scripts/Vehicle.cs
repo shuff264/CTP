@@ -54,7 +54,7 @@ public class Vehicle : MonoBehaviour {
 		GenerateEndPosition();
 
 		//currentPath = tm.DijkstraSearch(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
-		currentPath = tm.AStarSearch(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
+		currentPath = tm.PathFinder(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 		
 
 		if(currentPath == null){

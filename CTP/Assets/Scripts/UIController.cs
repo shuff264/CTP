@@ -23,6 +23,10 @@ public class UIController : Singleton<UIController> {
 		buttonG = grassButton.GetComponent<Button>();
 		buttonR = roadButton.GetComponent<Button>();
 		buttonL = lightsButton.GetComponent<Button>();
+
+		buttonG.interactable = false;
+		buttonR.interactable = true;
+		buttonL.interactable = true;
 	}
 //	Button b = rButton.GetComponent<Button>(); 
 //	ColorBlock cb = b.colors;
@@ -32,29 +36,32 @@ public class UIController : Singleton<UIController> {
 	// Update is called once per frame
 	void Update () {
 		if(placeType == 0){
-			buttonG.interactable = false;
-			buttonR.interactable = true;
-			buttonL.interactable = true;
+
 		}else if(placeType == 1){
-			buttonG.interactable = true;
-			buttonR.interactable = false;
-			buttonL.interactable = true;
+
 		}else if(placeType == 2){
-			buttonG.interactable = true;
-			buttonR.interactable = true;
-			buttonL.interactable = false;
+
 		}
 	}
 
 	public void OnClickGrass(){
 		placeType = 0;
+		buttonG.interactable = false;
+		buttonR.interactable = true;
+		buttonL.interactable = true;
 	}
 
 	public void OnClickRoad(){
 		placeType = 1;
+		buttonG.interactable = true;
+		buttonR.interactable = false;
+		buttonL.interactable = true;
 	}
 
 	public void OnClickLights(){
 		placeType = 2;
+		buttonG.interactable = true;
+		buttonR.interactable = true;
+		buttonL.interactable = false;
 	}
 }

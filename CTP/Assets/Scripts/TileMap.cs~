@@ -5,6 +5,9 @@ using System.Linq;
 
 public class TileMap : MonoBehaviour {
 
+	enum SearchTypes {Dijkstra, AStar};
+	SearchTypes searchType;
+	
 	public TileType[] tileTypes;
 
 	public int[,] tiles;
@@ -17,6 +20,8 @@ public class TileMap : MonoBehaviour {
 	public int mapSizeY = 25;
 
 	void Start() {
+		searchType = SearchTypes.Dijkstra;
+
 		GenerateMapData();
 		CreatePathFindingGraph();
 		CreateMapVisual();
@@ -161,7 +166,7 @@ public class TileMap : MonoBehaviour {
 	//PATHFINDING CODE BASED OFF PSEUDO CODE FOUND ON WIKIPIDIA
 	//https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm
 
-	public List<Node> DijkstraSearch(int startX, int startY, int endX, int endY){
+	public List<Node> PathFinder(int startX, int startY, int endX, int endY){
 
 		//Creating dictionaries to hold pathfinding data
 		//dist holds the distance between nodes as a float
@@ -223,8 +228,20 @@ public class TileMap : MonoBehaviour {
 			//To choose the best possible option
 			foreach(Node v in u.neighbours){
 				if(MovementAllowed(v.x, v.y)){
-					float temp = dist[u] + u.DistanceTo(v) + CostToEnterTile(v.x, v.y);
-					
+					float temp = 0;
+					if(searchType == SearchTypes.Dijkstra){
+						Debug.Log("Dijkstra");
+						temp = dist[u] + u.DistanceTo(v) + CostToEnterTile(v.x, v.y);
+					}
+					else if (searchType == SearchTypes.AStar){
+						Debug.Log("ASTAR");
+						temp = dist[u] + u.DistanceTo(v) + v.DistanceTo(endPosition) + CostToEnterTile(v.x, v.y);
+						
+					}
+					else {
+						Debug.Log("PROBLEM");
+					}
+
 					if(temp < dist[v]){
 						dist[v] = temp;
 						prev[v] = u;
@@ -256,104 +273,8 @@ public class TileMap : MonoBehaviour {
 
 		//Returns the path for the vehicle to use
 		return currentPath;
-	}
-
-	public List<Node> AStarSearch(int startX, int startY, int endX, int endY){
-
-		//Creating dictionaries to hold pathfinding data
-		//dist holds the distance between nodes as a float
-		//prev holds the node and the node before it
-		Dictionary<Node, float> dist = new Dictionary<Node, float>();
-		Dictionary<Node, Node> prev = new Dictionary<Node, Node>();
-		
-		//List of all nodes left to be visited and evaluated
-		List<Node> unvisited = new List<Node>();
-		
-		//Setting the starting point and ending point
-		Node startPosition = graph[startX, startY];
-		Node endPosition = graph[endX,endY];
-		
-		//Setting initial values for the starting node
-		//It is 0 distance from the start as it is the start
-		//As it is the first there are no previous nodes
-		dist[startPosition] = 0;
-		prev[startPosition] = null;
-
-		//Setting initial values for all other nodes
-		//Tentatively setting the distance to infinity
-		//Meaning that is impossbile for a node to be chosen
-		//Ahead of those more suitable
-		//As the paths have not yet been generated the previous
-		//node is set to null
-		//The nodes are then added to the unvisited list
-		foreach(Node v in graph){
-			if(v != startPosition){
-				dist[v] = Mathf.Infinity;
-				prev[v] = null;
-			}
-			unvisited.Add(v);
-		}
-
-		//While there are nodes still left to visit
-		while(unvisited.Count > 0){
-			Node u = null;
-			
-			//Chooses the node with the shortest possible distance
-			//Or the source node if that is all that is available
-			foreach(Node possibleU in unvisited){
-				if(u == null || dist[possibleU] < dist[u]){
-					u = possibleU;
-				}
-			}
-
-			//If its at the end position the function can end
-			if(u == endPosition){
-				break;
-			}
-
-			unvisited.Remove(u);
-
-			foreach(Node v in u.neighbours){
-				if(MovementAllowed(v.x, v.y)){
-					float temp = dist[u] + u.DistanceTo(v) + v.DistanceTo(endPosition) + CostToEnterTile(v.x, v.y);
-				
-					if(temp < dist[v]){
-						dist[v] = temp;
-						prev[v] = u;
-					}
-				}
-			}
-		}
-
-		//Actual filling out of path as a list begins
-		currentPath = new List<Node>();
-		
-		//If there is no possible route, return null
-		if(prev[endPosition] == null){
-			return currentPath = null;
-		}
-		
-		//Sets the current node to the end position to work backwards to the goal
-		Node current = endPosition;
-		
-		//Path is filled out, adding a node and then the previous of that node
-		//When previous is equal to null it is back at the startPosition
-		while(current != null){
-			currentPath.Add(current);
-			current = prev[current];
-		}
-		
-		//Reverses the path as currently it is running from end to start
-		currentPath.Reverse();
-		
-		//Returns the path for the vehicle to use
-		return currentPath;
-
-
-
 	}
 	
-
 	public void PlaceTile(int x, int y, int type){
 		tiles[x, y] = type;
 
