@@ -10,7 +10,7 @@ public class RoadPlacement : MonoBehaviour {
 
 	void OnMouseOver(){
 		if(Input.GetMouseButton(0)){
-			map.PlaceTile(tileX, tileY, UIController.Instance.placeType);
+			map.PlaceTile(tileX, tileY, UIController.instance.placeType);
 		}
 	}
 }

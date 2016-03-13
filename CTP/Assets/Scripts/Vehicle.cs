@@ -34,7 +34,7 @@ public class Vehicle : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		GlobalVehicleControl.Instance.cars.Add(this);
+		GlobalVehicleControl.instance.cars.Add(this);
 
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
 		rb = gameObject.GetComponent<Rigidbody> ();
@@ -76,7 +76,7 @@ public class Vehicle : MonoBehaviour {
 		
 
 		MoveNextTile();
-		lr.enabled = GlobalVehicleControl.Instance.drawRoute;
+		lr.enabled = GlobalVehicleControl.instance.drawRoute;
 
 	}
 
@@ -135,7 +135,7 @@ public class Vehicle : MonoBehaviour {
 	}
 
 	void SetUpLineRender(){
-		lr.enabled = GlobalVehicleControl.Instance.drawRoute;
+		lr.enabled = GlobalVehicleControl.instance.drawRoute;
 		lr.SetColors(Color.red, Color.red);
 		lr.SetWidth(0.2F, 0.2F);
 		lr.SetVertexCount(currentPath.Count);
@@ -149,7 +149,7 @@ public class Vehicle : MonoBehaviour {
 
 	void DestroyVehicle(){
 		currentPath = null;
-		GlobalVehicleControl.Instance.cars.Remove(this);
+		GlobalVehicleControl.instance.cars.Remove(this);
 		Destroy(gameObject);
 	}
 

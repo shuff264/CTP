@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+public enum SearchTypes {Dijkstra, AStar};
+
 public class TileMap : MonoBehaviour {
 
-	enum SearchTypes {Dijkstra, AStar};
-	SearchTypes searchType;
+	public static TileMap instance;
+
+	public SearchTypes searchType;
 	
 	public TileType[] tileTypes;
 
@@ -20,6 +23,8 @@ public class TileMap : MonoBehaviour {
 	public int mapSizeY = 25;
 
 	void Start() {
+		instance = this;
+
 		searchType = SearchTypes.Dijkstra;
 
 		GenerateMapData();
@@ -230,11 +235,9 @@ public class TileMap : MonoBehaviour {
 				if(MovementAllowed(v.x, v.y)){
 					float temp = 0;
 					if(searchType == SearchTypes.Dijkstra){
-						Debug.Log("Dijkstra");
 						temp = dist[u] + u.DistanceTo(v) + CostToEnterTile(v.x, v.y);
 					}
 					else if (searchType == SearchTypes.AStar){
-						Debug.Log("ASTAR");
 						temp = dist[u] + u.DistanceTo(v) + v.DistanceTo(endPosition) + CostToEnterTile(v.x, v.y);
 						
 					}
