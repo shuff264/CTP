@@ -25,26 +25,20 @@ public class Vehicle : MonoBehaviour {
 
 	float maxSpeed = 0;
 	float acceleration = 0.2f;
-	Vector3 modelOffset;
-	float lastRot = 0;
-	float thisRot;
-
-	Rigidbody rb;
+	
 	LineRenderer lr;
+
 	// Use this for initialization
 	void Start () {
 
 		GlobalVehicleControl.instance.cars.Add(this);
 
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
-		rb = gameObject.GetComponent<Rigidbody> ();
 		lr = gameObject.GetComponent<LineRenderer> ();
 
 		randomX = Random.Range(0,24);
 		randomY = Random.Range(0,24);
-
-		modelOffset = new Vector3(0.3f, 0.6f, 0f);
-		
+				
 		startTime = Time.time;
 		startPosition = gameObject.transform.position;
 		tileX = (int)startPosition.x;
