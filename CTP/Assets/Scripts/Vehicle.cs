@@ -234,8 +234,8 @@ public class Vehicle : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter(Collision coll){
-
+	void OnMouseDown(){
+		lr.enabled = !lr.enabled;
 	}
 
 
