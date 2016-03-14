@@ -13,12 +13,14 @@ public class UIController : MonoBehaviour {
 	public GameObject lightsButton;
 	public GameObject dijkstraButton;
 	public GameObject astarButton;
+	
 
 	Button buttonG;
 	Button buttonR;
 	Button buttonL;
 	Button buttonD;
 	Button buttonA;
+	
 
 
 	// Use this for initialization
@@ -30,6 +32,7 @@ public class UIController : MonoBehaviour {
 		buttonL = lightsButton.GetComponent<Button>();
 		buttonD = dijkstraButton.GetComponent<Button>();
 		buttonA = astarButton.GetComponent<Button>();
+		
 
 		buttonG.interactable = false;
 		buttonR.interactable = true;
@@ -37,6 +40,7 @@ public class UIController : MonoBehaviour {
 
 		buttonD.interactable = false;
 		buttonA.interactable = true;
+
 	}
 
 	// Update is called once per frame
@@ -76,4 +80,5 @@ public class UIController : MonoBehaviour {
 		buttonD.interactable = true;
 		buttonA.interactable = false;
 	}
+
 }

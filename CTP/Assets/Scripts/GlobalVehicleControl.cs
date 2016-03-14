@@ -16,8 +16,20 @@ public class GlobalVehicleControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.Space)){
-			drawRoute = !drawRoute;
+
+	}
+
+	public void DrawDebug(){
+		if(drawRoute == false){
+			foreach(Vehicle v in cars){
+				v.lr.enabled = true;
+				drawRoute = true;
+			}
+		} else if(drawRoute == true){
+			foreach(Vehicle v in cars){
+				v.lr.enabled = false;
+				drawRoute = false;
+			}
 		}
 	}
 }

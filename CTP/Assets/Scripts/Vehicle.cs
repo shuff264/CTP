@@ -26,7 +26,7 @@ public class Vehicle : MonoBehaviour {
 	float maxSpeed = 0;
 	float acceleration = 0.2f;
 	
-	LineRenderer lr;
+	public LineRenderer lr;
 
 	// Use this for initialization
 	void Start () {
@@ -70,7 +70,7 @@ public class Vehicle : MonoBehaviour {
 		
 
 		MoveNextTile();
-		lr.enabled = GlobalVehicleControl.instance.drawRoute;
+		//lr.enabled = GlobalVehicleControl.instance.drawRoute;
 
 	}
 
