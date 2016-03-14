@@ -51,12 +51,12 @@ public class Vehicle : MonoBehaviour {
 		currentPath = tm.PathFinder(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 		
 
-		if(currentPath == null){
-			DestroyVehicle();
+		if (currentPath == null) {
+			DestroyVehicle ();
+		} else {
+
+			SetUpLineRender ();
 		}
-
-		SetUpLineRender();
-
 	}
 
 	void FixedUpdate(){
