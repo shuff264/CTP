@@ -17,6 +17,8 @@ public class Vehicle : MonoBehaviour {
 	Vector3 startPosition;
 	public Vector3 endPosition;
 	public float speed = 0.1f;
+
+	float lastRot;
 	
 	float startTime;
 	float journeyLength;
@@ -114,7 +116,7 @@ public class Vehicle : MonoBehaviour {
 	void RotateVehicle(){
 		Quaternion targetRotation;
 		targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 0, currentPath[0].y) - transform.position);
-		float str = Mathf.Min ((speed * 10) * Time.deltaTime, 1);
+		float str = Mathf.Min ((speed * 5) * Time.deltaTime, 1);
 
 		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);	
 	}
@@ -178,6 +180,7 @@ public class Vehicle : MonoBehaviour {
 //					return 0
 
 
+
 //		thisRot = gameObject.transform.rotation.y;
 //
 //		if(thisRot != lastRot){
@@ -185,9 +188,19 @@ public class Vehicle : MonoBehaviour {
 //		}
 //
 //		lastRot = thisRot;
-//
-		return 0;
 
+	
+		if(gameObject.transform.rotation.y != lastRot){
+			Debug.Log("SLow down");
+			lastRot = gameObject.transform.rotation.y;
+			return -0.3f;
+
+		} else {
+			Debug.Log("carry on");
+			lastRot = gameObject.transform.rotation.y;
+			return 0;
+		}
+	
 	}
 
 	float Distance(Ray distanceRay){
