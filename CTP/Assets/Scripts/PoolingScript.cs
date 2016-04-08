@@ -26,7 +26,8 @@ public class PoolingScript : MonoBehaviour {
 			poolList.RemoveAt(0);
 			return obj;
 		} else {
-			return null; //Change this to create a new objec to be added to the list
+			GameObject obj = (GameObject)Instantiate(car, new Vector3(-100, -100, -100), Quaternion.identity);
+			return obj;
 		}
 
 	}
@@ -40,6 +41,6 @@ public class PoolingScript : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+		Debug.Log(poolList.Count);
 	}
 }

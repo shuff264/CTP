@@ -29,8 +29,6 @@ public class VehicleSpawn : MonoBehaviour {
 				GameObject obj = PoolingScript.instance.GetCar();
 				obj.SetActive(true);
 				obj.GetComponent<Vehicle>().VehicleStart();
-				//TODO: Call vehicle start up functions
-				//TODO: Change start position each time
 			}
 			else{
 				randomX = Random.Range(0,24);

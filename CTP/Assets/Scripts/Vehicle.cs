@@ -57,7 +57,6 @@ public class Vehicle : MonoBehaviour {
 			currentPath = tm.PathFinder(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 
 			if (currentPath == null) {
-				//TODO: DONT DESTROY ADD BACK TO POOL
 				DestroyVehicle ();
 			} else {
 				SetUpLineRender ();
