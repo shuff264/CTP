@@ -236,6 +236,11 @@ public class TileMap : MonoBehaviour {
 	}
 	
 	public void PlaceTile(int x, int y, int type){
+
+		if(type == 3){
+			return;
+		}
+
 		tiles[x, y] = type;
 
 		//Destroys tile in that position and creates a new one of the new type

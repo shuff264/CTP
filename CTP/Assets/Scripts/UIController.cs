@@ -6,15 +6,16 @@ public class UIController : MonoBehaviour {
 
 	public static UIController instance;
 
-	public int placeType = 0;
+	public int placeType = 3;
 
+	public GameObject noneButton;
 	public GameObject grassButton;
 	public GameObject roadButton;
 	public GameObject lightsButton;
 	public GameObject dijkstraButton;
 	public GameObject astarButton;
 	
-
+	Button buttonN;
 	Button buttonG;
 	Button buttonR;
 	Button buttonL;
@@ -32,9 +33,10 @@ public class UIController : MonoBehaviour {
 		buttonL = lightsButton.GetComponent<Button>();
 		buttonD = dijkstraButton.GetComponent<Button>();
 		buttonA = astarButton.GetComponent<Button>();
+		buttonN = noneButton.GetComponent<Button>();
 		
-
-		buttonG.interactable = false;
+		buttonN.interactable = false;
+		buttonG.interactable = true;
 		buttonR.interactable = true;
 		buttonL.interactable = true;
 
@@ -48,8 +50,17 @@ public class UIController : MonoBehaviour {
 
 	}
 
+	public void OnClickNone(){
+		placeType = 3;
+		buttonN.interactable = false;
+		buttonG.interactable = true;
+		buttonR.interactable = true;
+		buttonL.interactable = true;
+	}
+
 	public void OnClickGrass(){
 		placeType = 0;
+		buttonN.interactable = true;
 		buttonG.interactable = false;
 		buttonR.interactable = true;
 		buttonL.interactable = true;
@@ -57,6 +68,7 @@ public class UIController : MonoBehaviour {
 
 	public void OnClickRoad(){
 		placeType = 1;
+		buttonN.interactable = true;
 		buttonG.interactable = true;
 		buttonR.interactable = false;
 		buttonL.interactable = true;
@@ -64,6 +76,7 @@ public class UIController : MonoBehaviour {
 
 	public void OnClickLights(){
 		placeType = 2;
+		buttonN.interactable = true;
 		buttonG.interactable = true;
 		buttonR.interactable = true;
 		buttonL.interactable = false;
