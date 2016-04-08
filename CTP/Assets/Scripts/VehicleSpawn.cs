@@ -26,7 +26,11 @@ public class VehicleSpawn : MonoBehaviour {
 
 		if (randomValue < spawnRateSlider.value) {
 			if(tm.MovementAllowed(randomX, randomY)){
-				Instantiate(car, new Vector3(randomX, 0, randomY), Quaternion.identity);
+				GameObject obj = PoolingScript.instance.GetCar();
+				obj.SetActive(true);
+				obj.GetComponent<Vehicle>().VehicleStart();
+				//TODO: Call vehicle start up functions
+				//TODO: Change start position each time
 			}
 			else{
 				randomX = Random.Range(0,24);

@@ -31,35 +31,40 @@ public class Vehicle : MonoBehaviour {
 	public LineRenderer lr;
 
 	// Use this for initialization
-	void Start () {
-
-		GlobalVehicleControl.instance.cars.Add(this);
-
+	void Awake () {
+		
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
 		lr = gameObject.GetComponent<LineRenderer> ();
+		
+	}
+
+	public void VehicleStart(){
+		GlobalVehicleControl.instance.cars.Add(this);
 
 		randomX = Random.Range(0,24);
 		randomY = Random.Range(0,24);
-				
+		
 		startTime = Time.time;
-		startPosition = gameObject.transform.position;
-		tileX = (int)startPosition.x;
-		tileY = (int)startPosition.z;
-		
-		//Need to ditch this
-		GenerateEndPosition();
+		startPosition = new Vector3(Random.Range(0, TileMap.instance.mapSizeX), 0.8f, Random.Range(0, TileMap.instance.mapSizeY));
+		if(TileMap.instance.MovementAllowed((int)startPosition.x, (int)startPosition.z) == false){
+			DestroyVehicle();
+		} else{
+			tileX = (int)startPosition.x;
+			tileY = (int)startPosition.z;
+			
+			GenerateEndPosition();
 
-		//currentPath = tm.DijkstraSearch(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
-		currentPath = tm.PathFinder(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
-		
+			currentPath = tm.PathFinder(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 
-		if (currentPath == null) {
-			DestroyVehicle ();
-		} else {
-
-			SetUpLineRender ();
+			if (currentPath == null) {
+				//TODO: DONT DESTROY ADD BACK TO POOL
+				DestroyVehicle ();
+			} else {
+				SetUpLineRender ();
+			}
 		}
 	}
+
 
 	void FixedUpdate(){
 		maxSpeed = tm.tileTypes [tm.tiles[currentPath [0].x, currentPath [0].y]].maxSpeed;
@@ -80,16 +85,6 @@ public class Vehicle : MonoBehaviour {
 		if(currentPath == null){
 			DestroyVehicle();
 		}
-
-		//startPosition = new Vector3 (currentPath[0].x, 1, currentPath[0].y); 
-		//endPosition = new Vector3 (currentPath[1].x, 1, currentPath[1].y); 
-
-		//THIS SHOULD DO THE BETTER MOVEMENT
-		//rb.AddForce (transform.forward * speed);
-		
-		//
-		//		rb.AddForce(transform.forward * Time.deltaTime, ForceMode.Acceleration);
-		//		//rb.AddTorque(targetDir);
 
 		journeyLength = Vector3.Distance (new Vector3(currentPath[0].x, 0, currentPath[0].y), new Vector3 (currentPath[1].x, 0, currentPath[1].y));
 
@@ -146,7 +141,7 @@ public class Vehicle : MonoBehaviour {
 	void DestroyVehicle(){
 		currentPath = null;
 		GlobalVehicleControl.instance.cars.Remove(this);
-		Destroy(gameObject);
+		PoolingScript.instance.ReturnCar(gameObject);
 	}
 
 	void AdjustSpeed(Ray distanceRay){
@@ -157,11 +152,7 @@ public class Vehicle : MonoBehaviour {
 		}else{
 			speed += (Accelerate() + Turning() + Distance(distanceRay));
 		}
-
-//		speed += Accelerate();
-//		if(speed >= 0){
-//			 speed += (Turning() + Distance( distanceRay));
-//		}
+		
 	}
 
 	float Accelerate(){
@@ -174,29 +165,11 @@ public class Vehicle : MonoBehaviour {
 	}
 
 	float Turning(){
-//		if we ar turning
-//			return -0.2
-//				else
-//					return 0
-
-
-
-//		thisRot = gameObject.transform.rotation.y;
-//
-//		if(thisRot != lastRot){
-//			return -0.5f;
-//		}
-//
-//		lastRot = thisRot;
-
-	
 		if(gameObject.transform.rotation.y != lastRot){
-			Debug.Log("SLow down");
 			lastRot = gameObject.transform.rotation.y;
 			return -0.3f;
 
 		} else {
-			Debug.Log("carry on");
 			lastRot = gameObject.transform.rotation.y;
 			return 0;
 		}
@@ -204,12 +177,6 @@ public class Vehicle : MonoBehaviour {
 	}
 
 	float Distance(Ray distanceRay){
-//		if object is in front
-//			return negative value scaled to distance and there velocity away
-//				else
-//					return 0	
-
-//		use a raycast a certain distance in front scale speed based on that
 		float maxReduce = 1f;
 		RaycastHit hit;
 		
