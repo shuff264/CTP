@@ -27,6 +27,10 @@ public class Vehicle : MonoBehaviour {
 
 	float maxSpeed = 0;
 	float acceleration = 0.2f;
+
+	float timeNotMoved = 0f;
+	float respawnTime = 10f;
+	Vector3 lastPosition;
 	
 	public LineRenderer lr;
 
@@ -66,6 +70,7 @@ public class Vehicle : MonoBehaviour {
 
 
 	void FixedUpdate(){
+
 		maxSpeed = tm.tileTypes [tm.tiles[currentPath [0].x, currentPath [0].y]].maxSpeed;
 
 		Ray distanceRay = new Ray(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward);
@@ -74,10 +79,18 @@ public class Vehicle : MonoBehaviour {
 
 		AdjustSpeed(distanceRay);
 		
-
 		MoveNextTile();
 		//lr.enabled = GlobalVehicleControl.instance.drawRoute;
+		if(lastPosition != null){
+			if(gameObject.transform.position == lastPosition){
+				timeNotMoved += Time.deltaTime;
+			}
+			else {
+				timeNotMoved = 0f;
+			}
+		}
 
+		lastPosition = gameObject.transform.position;
 	}
 
 	public void MoveNextTile(){
