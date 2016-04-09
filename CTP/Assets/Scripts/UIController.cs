@@ -22,6 +22,7 @@ public class UIController : MonoBehaviour {
 	Button buttonD;
 	Button buttonA;
 	
+	public Slider spawnRateSlider;
 
 
 	// Use this for initialization
@@ -42,6 +43,8 @@ public class UIController : MonoBehaviour {
 
 		buttonD.interactable = false;
 		buttonA.interactable = true;
+
+		spawnRateSlider.value = 100.0f;
 
 	}
 
