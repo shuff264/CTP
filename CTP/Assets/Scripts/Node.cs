@@ -4,11 +4,16 @@ using System.Collections.Generic;
 
 public class Node {
 
+	//Node class used to form the graph for pathfinding
+
+	//List of the four neighbours
 	public List<Node> neighbours;
 
+	//Nodes position in the map
 	public int x;
 	public int y;
-	
+
+	//Contrsuctor
 	public Node(){
 		neighbours = new List<Node>();
 	}

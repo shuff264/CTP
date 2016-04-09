@@ -15,6 +15,11 @@ public class VehicleSpawn : MonoBehaviour {
 		tm = GameObject.Find("Map").GetComponent<TileMap>();
 	}
 
+	//Uses a random value to control whether a vehicle is to be spawned
+	//The cut off value is decided by the spawn rate slider
+	//If it is less than the spawn rate, it spawns a vehicle
+	//The vehicle checks if movement is allowed at the spawn tile which has been randomly chosen
+	//Then calls the poolingScript to spawn the vehicle
 	void Update () {
 		randomValue = Random.Range (0, 1000);
 

@@ -9,7 +9,8 @@ public class TrafficLights : MonoBehaviour {
 	float timeOnGreen;
 	float timePassedOnGreen = 0f;
 
-	// Use this for initialization
+	//Randomly generates the time it takes to change
+	//Randomly selects which direction is on green (UP/DOWN OR LEFT/RIGHT)
 	void Awake () {
 		timeOnGreen = Random.Range(2f, 6f);
 		xGreen = returnBoolean();
@@ -17,7 +18,7 @@ public class TrafficLights : MonoBehaviour {
 
 	}
 	
-	// Update is called once per frame
+	//When enough time is elapsed the directions switch
 	void Update () {
 		if(timePassedOnGreen >= timeOnGreen){
 			xGreen = !xGreen;

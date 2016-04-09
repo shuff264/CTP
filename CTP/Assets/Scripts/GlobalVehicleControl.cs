@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class GlobalVehicleControl : MonoBehaviour {
 
+	//Singleton to control some of the variables which effect all vehicles
+	//Such as debug lines on all vehicles
+
 	public static GlobalVehicleControl instance;
 
 	public List<Vehicle> cars = new List<Vehicle>();
@@ -19,6 +22,7 @@ public class GlobalVehicleControl : MonoBehaviour {
 
 	}
 
+	//On button press sets all the draw debug variables to true or false depending on where it is already enabled or not
 	public void DrawDebug(){
 		if(drawRoute == false){
 			foreach(Vehicle v in cars){

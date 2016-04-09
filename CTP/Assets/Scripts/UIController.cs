@@ -4,24 +4,29 @@ using System.Collections;
 
 public class UIController : MonoBehaviour {
 
+	//UI Controller class to handle all buttons and other elements as part of the UI
+
 	public static UIController instance;
 
 	public int placeType = 3;
 
+	//Getting all the button objects
 	public GameObject noneButton;
 	public GameObject grassButton;
 	public GameObject roadButton;
 	public GameObject lightsButton;
 	public GameObject dijkstraButton;
 	public GameObject astarButton;
-	
+
+	//Getting the button component from the button objects
 	Button buttonN;
 	Button buttonG;
 	Button buttonR;
 	Button buttonL;
 	Button buttonD;
 	Button buttonA;
-	
+
+	//Getting the sliiders
 	public Slider spawnRateSlider;
 	public Slider gameSpeedSlider;
 
@@ -36,7 +41,8 @@ public class UIController : MonoBehaviour {
 		buttonD = dijkstraButton.GetComponent<Button>();
 		buttonA = astarButton.GetComponent<Button>();
 		buttonN = noneButton.GetComponent<Button>();
-		
+
+		//Setting initial values
 		buttonN.interactable = false;
 		buttonG.interactable = true;
 		buttonR.interactable = true;
@@ -44,7 +50,7 @@ public class UIController : MonoBehaviour {
 
 		buttonD.interactable = false;
 		buttonA.interactable = true;
-
+		
 		spawnRateSlider.value = 100.0f;
 		gameSpeedSlider.value = 1.0f;
 
@@ -52,10 +58,14 @@ public class UIController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		//Update using the gameSPeedSlider to control the tick rate of the game
 		Time.timeScale = gameSpeedSlider.value;
-
 	}
 
+	//OnClick functions for all of the buttons
+	//Interactable changes each time to make it clear to the user what button is selected
+	//Also makes that button un-useable to prevent any problems
+	//Place type feeds into the tile map for placing objects
 	public void OnClickNone(){
 		placeType = 3;
 		buttonN.interactable = false;
