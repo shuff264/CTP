@@ -11,7 +11,7 @@ public class TrafficLights : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		timeOnGreen = Random.Range(5, 15);
+		timeOnGreen = Random.Range(2f, 6f);
 		xGreen = returnBoolean();
 		zGreen = !xGreen;
 
