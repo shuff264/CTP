@@ -23,6 +23,7 @@ public class UIController : MonoBehaviour {
 	Button buttonA;
 	
 	public Slider spawnRateSlider;
+	public Slider gameSpeedSlider;
 
 
 	// Use this for initialization
@@ -45,11 +46,13 @@ public class UIController : MonoBehaviour {
 		buttonA.interactable = true;
 
 		spawnRateSlider.value = 100.0f;
+		gameSpeedSlider.value = 1.0f;
 
 	}
 
 	// Update is called once per frame
 	void Update () {
+		Time.timeScale = gameSpeedSlider.value;
 
 	}
 

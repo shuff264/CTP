@@ -90,6 +90,10 @@ public class Vehicle : MonoBehaviour {
 			}
 		}
 
+		if (timeNotMoved > respawnTime) {
+			DestroyVehicle ();
+		}
+
 		lastPosition = gameObject.transform.position;
 	}
 
