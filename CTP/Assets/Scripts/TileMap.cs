@@ -3,37 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+//Enum holding
 public enum SearchTypes {Dijkstra, AStar};
 
 public class TileMap : MonoBehaviour {
 
+	//Singleton
 	public static TileMap instance;
 
+	//Initialising search types
 	public SearchTypes searchType;
-	
+
+	//Array of differen tile types
 	public TileType[] tileTypes;
 
+	//Tile grid 2D array
 	public int[,] tiles;
 	public GameObject[,] tilesGrid;
 
+	//Current path
 	public List<Node> currentPath = null;
 	public Node[,] graph;
 
+	//Size of the map
 	public int mapSizeX = 25;
 	public int mapSizeY = 25;
 
 	void Start() {
 		instance = this;
 
+		//Setting the initital search type
 		searchType = SearchTypes.Dijkstra;
 
+		//Function to create the map
 		GenerateMapData();
+		//Function to greate the path finding graph
 		CreatePathFindingGraph();
+		//Function to create the map visuals
 		CreateMapVisual();
-	}
-
-	void Update(){
-
 	}
 
 	void GenerateMapData(){
@@ -45,6 +52,7 @@ public class TileMap : MonoBehaviour {
 		//Setting the tile type of all tiles
 		//0 = GRASS
 		//1 = ROAD
+		//2 = LIGHTS
 		for(int x = 0; x < mapSizeX; x++){
 			for(int y = 0; y < mapSizeY; y++){
 				tiles[x,y] = 0;
