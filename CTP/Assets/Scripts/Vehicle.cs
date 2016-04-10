@@ -129,14 +129,14 @@ public class Vehicle : MonoBehaviour {
 
 	void CheckIfMoved(){
 		//Checks the current position against the last position, if they are the same add to the timer if not set it to 0
-		if(lastPosition != null){
+//		if(lastPosition != null){
 			if(gameObject.transform.position == lastPosition){
 				timeNotMoved += Time.deltaTime;
 			}
 			else {
 				timeNotMoved = 0f;
 			}
-		}
+		//}
 
 		//If its not moved for too long, destroy it
 		if (timeNotMoved > respawnTime) {
