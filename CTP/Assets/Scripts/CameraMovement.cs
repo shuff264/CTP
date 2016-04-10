@@ -31,8 +31,11 @@ public class CameraMovement : MonoBehaviour {
 		}
 
 		height += Input.GetAxis ("Mouse ScrollWheel");
-
-		gameObject.transform.position = new Vector3 (gameObject.transform.position.x, height * 2, gameObject.transform.position.z);
-
+		Debug.Log (height);
+		if (height >= 1) {
+			gameObject.transform.position = new Vector3 (gameObject.transform.position.x, height, gameObject.transform.position.z);
+		} else {
+			height = 1;
+		}
 	}
 }
