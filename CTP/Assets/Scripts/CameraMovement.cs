@@ -7,14 +7,16 @@ public class CameraMovement : MonoBehaviour {
 	Rigidbody rb;
 	float height;
 
-	// Use this for initialization
 	void Start () {
 		rb = gameObject.GetComponent<Rigidbody> ();
 		height = gameObject.transform.position.y;
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
+		//Utilises the input manager to control the camera
+		//Arrow keys to love it laterally
+		//Scroll wheel to go up and down
+		//Mouse axis used to aim camera - its a bit weird atm
 		float forwardMovement = Input.GetAxis ("Vertical");
 		float sidewaysMovement = Input.GetAxis ("Horizontal");
 		Vector3 movement = new Vector3 (sidewaysMovement * 10, 0, forwardMovement * 10);
@@ -31,7 +33,6 @@ public class CameraMovement : MonoBehaviour {
 		}
 
 		height += Input.GetAxis ("Mouse ScrollWheel");
-		Debug.Log (height);
 		if (height >= 1) {
 			gameObject.transform.position = new Vector3 (gameObject.transform.position.x, height, gameObject.transform.position.z);
 		} else {
