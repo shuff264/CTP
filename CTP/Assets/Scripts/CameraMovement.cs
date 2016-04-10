@@ -5,33 +5,34 @@ using System.Collections.Generic;
 public class CameraMovement : MonoBehaviour {
 
 	Rigidbody rb;
+	float height;
 
 	// Use this for initialization
 	void Start () {
 		rb = gameObject.GetComponent<Rigidbody> ();
+		height = gameObject.transform.position.y;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		float forwardMovement = Input.GetAxis ("Vertical");
-		Vector3 movement = new Vector3 (0, 0, forwardMovement * 10);
+		float sidewaysMovement = Input.GetAxis ("Horizontal");
+		Vector3 movement = new Vector3 (sidewaysMovement * 10, 0, forwardMovement * 10);
 
-		//TODO:Fix all this so its nicer
-		//TODO:Maybe use the scroll wheel to move over the arrow keys
-		//TODO:Or arrow keys to move left and right forward and back with mouse to zoom and look
-		if (forwardMovement > 0f) {
-			rb.velocity = gameObject.transform.rotation * movement;
-		} else if (forwardMovement < 0f) {
-			rb.velocity = gameObject.transform.rotation * movement; 
-		}
-	
+		rb.velocity = movement;
+		
 		if (Input.GetButton("Fire2")) {
 
 			float h =  Input.GetAxis("Mouse X"); //TODO: Works but might be a bit slow and may need refining. A bit janky.
 			float v =  Input.GetAxis("Mouse Y");
-	
+			v = -v;
 			transform.Rotate(v, h, 0);
 
 		}
+
+		height += Input.GetAxis ("Mouse ScrollWheel");
+
+		gameObject.transform.position = new Vector3 (gameObject.transform.position.x, height * 2, gameObject.transform.position.z);
+
 	}
 }
