@@ -11,6 +11,8 @@ public class Vehicle : MonoBehaviour {
 	int randomX;
 	int randomY;
 
+	public GameObject arrow;
+
 
 	public List<Node> currentPath = null;
 
@@ -232,6 +234,7 @@ public class Vehicle : MonoBehaviour {
 
 	void OnMouseDown(){
 		lr.enabled = !lr.enabled;
+		arrow.SetActive (!arrow.activeSelf); //TODO: Reset this after its destoryed
 	}
 
 
