@@ -12,7 +12,7 @@ public class RoadPlacement : MonoBehaviour {
 
 	//On mouse over and get button down used to allow for dragging of placement
 	void OnMouseOver(){
-		if(Input.GetMouseButton(0)){ //TODO: Use the input manager
+		if(Input.GetButton("Fire1")){ 
 			map.PlaceTile(tileX, tileY, UIController.instance.placeType);
 		}
 	}
