@@ -7,41 +7,26 @@ public class Vehicle : MonoBehaviour {
 
 	public int tileX;
 	public int tileY;
+	public GameObject arrow;
+	public List<Node> currentPath = null;
+	public Vector3 endPosition;
+	public float speed = 0.1f;
+	public LineRenderer lr;
 
 	int randomX;
 	int randomY;
-
-	public GameObject arrow;
-
-
-	public List<Node> currentPath = null;
-
-	Vector3 startPosition;
-	public Vector3 endPosition;
-	public float speed = 0.1f;
-
 	float lastRot;
-	
 	float startTime;
 	float journeyLength;
-
-	public TileMap tm;
-
 	float maxSpeed = 0;
 	float acceleration = 0.2f;
-
 	float timeNotMoved = 0f;
 	float respawnTime = 10f;
 	Vector3 lastPosition;
-	
-	public LineRenderer lr;
+	Vector3 startPosition;
 
-	// Use this for initialization
 	void Awake () {
-		
-		tm = GameObject.Find("Map").GetComponent<TileMap>();
 		lr = gameObject.GetComponent<LineRenderer> ();
-		
 	}
 
 	public void VehicleStart(){
@@ -60,7 +45,7 @@ public class Vehicle : MonoBehaviour {
 			
 			GenerateEndPosition();
 
-			currentPath = tm.PathFinder(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
+			currentPath = TileMap.instance.PathFinder(tileX, tileY, (int)endPosition.x, (int)endPosition.z);
 
 			if (currentPath == null) {
 				DestroyVehicle ();
@@ -73,7 +58,7 @@ public class Vehicle : MonoBehaviour {
 
 	void FixedUpdate(){
 
-		maxSpeed = tm.tileTypes [tm.tiles[currentPath [0].x, currentPath [0].y]].maxSpeed;
+		maxSpeed = TileMap.instance.tileTypes [TileMap.instance.tiles[currentPath [0].x, currentPath [0].y]].maxSpeed;
 
 		Ray distanceRay = new Ray(gameObject.transform.GetChild(0).transform.position, gameObject.transform.GetChild(0).transform.forward);
 		
@@ -81,22 +66,9 @@ public class Vehicle : MonoBehaviour {
 
 		AdjustSpeed(distanceRay);
 		
-		MoveNextTile();
-		//lr.enabled = GlobalVehicleControl.instance.drawRoute;
-		if(lastPosition != null){
-			if(gameObject.transform.position == lastPosition){
-				timeNotMoved += Time.deltaTime;
-			}
-			else {
-				timeNotMoved = 0f;
-			}
-		}
+		MoveNextTile ();
 
-		if (timeNotMoved > respawnTime) {
-			DestroyVehicle ();
-		}
-
-		lastPosition = gameObject.transform.position;
+		CheckIfMoved ();
 	}
 
 	public void MoveNextTile(){
@@ -113,9 +85,7 @@ public class Vehicle : MonoBehaviour {
 		if(speed > 0){
 			RotateVehicle();
 		}
-
-
-
+		
 		if(gameObject.transform.position == new Vector3(currentPath[1].x, 0, currentPath[1].y)){
 			startTime = Time.time;
 			currentPath.RemoveAt(0);
@@ -126,16 +96,8 @@ public class Vehicle : MonoBehaviour {
 		}
 	}
 
-	void RotateVehicle(){
-		Quaternion targetRotation;
-		targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 0, currentPath[0].y) - transform.position);
-		float str = Mathf.Min ((speed * 5) * Time.deltaTime, 1);
-
-		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);	
-	}
-
 	void GenerateEndPosition(){
-		while(!tm.MovementAllowed(randomX, randomY)){
+		while(!TileMap.instance.MovementAllowed(randomX, randomY)){
 			randomX = Random.Range(0,24);
 			randomY = Random.Range(0,24);
 		}
@@ -143,23 +105,21 @@ public class Vehicle : MonoBehaviour {
 		endPosition = new Vector3 (randomX, 0, randomY);
 	}
 
-	void SetUpLineRender(){
-		lr.enabled = GlobalVehicleControl.instance.drawRoute;
-		lr.SetColors(Color.red, Color.red);
-		lr.SetWidth(0.2F, 0.2F);
-		lr.SetVertexCount(currentPath.Count);
-
-		for(int i=0; i<=currentPath.Count; i++){
-			if(i != currentPath.Count){
-				lr.SetPosition(i, new Vector3(currentPath[i].x, 1, currentPath[i].y));
+	void CheckIfMoved(){
+		if(lastPosition != null){
+			if(gameObject.transform.position == lastPosition){
+				timeNotMoved += Time.deltaTime;
+			}
+			else {
+				timeNotMoved = 0f;
 			}
 		}
-	}
-
-	void DestroyVehicle(){
-		currentPath = null;
-		GlobalVehicleControl.instance.cars.Remove(this);
-		PoolingScript.instance.ReturnCar(gameObject);
+		
+		if (timeNotMoved > respawnTime) {
+			DestroyVehicle ();
+		}
+		
+		lastPosition = gameObject.transform.position;
 	}
 
 	void AdjustSpeed(Ray distanceRay){
@@ -232,10 +192,45 @@ public class Vehicle : MonoBehaviour {
 		}
 	}
 
-	void OnMouseDown(){
-		lr.enabled = !lr.enabled;
-		arrow.SetActive (!arrow.activeSelf); //TODO: Reset this after its destoryed
+	void RotateVehicle(){
+		Quaternion targetRotation;
+		targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 0, currentPath[0].y) - transform.position);
+		float str = Mathf.Min ((speed * 5) * Time.deltaTime, 1);
+		
+		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);	
 	}
+
+	void SetUpLineRender(){
+		lr.enabled = GlobalVehicleControl.instance.drawRoute;
+		lr.SetColors(Color.red, Color.red);
+		lr.SetWidth(0.2F, 0.2F);
+		lr.SetVertexCount(currentPath.Count);
+		
+		for(int i=0; i<=currentPath.Count; i++){
+			if(i != currentPath.Count){
+				lr.SetPosition(i, new Vector3(currentPath[i].x, 1, currentPath[i].y));
+			}
+		}
+	}
+
+	void DestroyVehicle(){
+		currentPath = null;
+		GlobalVehicleControl.instance.cars.Remove(this);
+		PoolingScript.instance.ReturnCar(gameObject);
+		
+		lr.enabled = false;
+		arrow.SetActive (false);
+	}
+
+	void OnMouseDown(){
+		Selected ();
+	}
+
+	void Selected(){
+		lr.enabled = !lr.enabled;
+		arrow.SetActive (!arrow.activeSelf);
+	}
+
 
 
 }	
