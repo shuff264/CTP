@@ -18,6 +18,7 @@ public class UIController : MonoBehaviour {
 	public GameObject dijkstraButton;
 	public GameObject astarButton;
 
+
 	//Getting the button component from the button objects
 	Button buttonN;
 	Button buttonG;
@@ -71,7 +72,7 @@ public class UIController : MonoBehaviour {
 		buttonN.interactable = false;
 		buttonG.interactable = true;
 		buttonR.interactable = true;
-		buttonL.interactable = true;
+		buttonL.interactable = true;;
 	}
 
 	public void OnClickGrass(){
