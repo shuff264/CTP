@@ -3,80 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+//Enum holding
 public enum SearchTypes {Dijkstra, AStar};
 
 public class TileMap : MonoBehaviour {
 
+	//Singleton
 	public static TileMap instance;
 
+	//Initialising search types
 	public SearchTypes searchType;
-	
+
+	//Array of differen tile types
 	public TileType[] tileTypes;
 
+	//Tile grid 2D array
 	public int[,] tiles;
 	public GameObject[,] tilesGrid;
 
+	//Current path
 	public List<Node> currentPath = null;
 	public Node[,] graph;
 
+	//Size of the map
 	public int mapSizeX = 25;
 	public int mapSizeY = 25;
 
 	void Start() {
 		instance = this;
 
+		//Setting the initital search type
 		searchType = SearchTypes.Dijkstra;
 
+		//Function to create the map
 		GenerateMapData();
+		//Function to greate the path finding graph
 		CreatePathFindingGraph();
+		//Function to create the map visuals
 		CreateMapVisual();
-	}
-
-	void Update(){
-		
-		//SWITCHES ALL ROADS AND GRASS AROUND
-		//JUST HERE TO TEST SOME STUFF
-		//PROVES THAT I CAN CHECK THE TILE TYPE AND MAKE A DECISION BASED ON IT
-		if(Input.GetKeyDown("return")){
-			
-			for (int x = 0; x < mapSizeX; x++) {
-				for (int y = 0; y < mapSizeY; y++) {
-					
-					if(tiles[x,y] == 0){
-						tiles [x, y] = 1;
-						TileType tt = tileTypes[tiles[x,y]];
-						Destroy (tilesGrid [x, y]);
-						tilesGrid [x, y] = (GameObject)Instantiate (tt.tilePrefab, new Vector3 (x, 0, y), Quaternion.identity);
-						
-						RoadPlacement rp = tilesGrid[x,y].GetComponent<RoadPlacement>();
-						rp.tileX = x;
-						rp.tileY = y;
-						rp.map = this;
-						
-						TileData td = tilesGrid[x,y].GetComponent<TileData>();
-						td.tileX = x;
-						td.tileY = y;
-						td.map = this;
-					}
-					else if(tiles[x,y] == 1){
-						tiles [x, y] = 0;
-						TileType tt = tileTypes[tiles[x,y]];
-						Destroy (tilesGrid [x, y]);
-						tilesGrid [x, y] = (GameObject)Instantiate (tt.tilePrefab, new Vector3 (x, 0, y), Quaternion.identity);
-						
-						RoadPlacement rp = tilesGrid[x,y].GetComponent<RoadPlacement>();
-						rp.tileX = x;
-						rp.tileY = y;
-						rp.map = this;
-						
-						TileData td = tilesGrid[x,y].GetComponent<TileData>();
-						td.tileX = x;
-						td.tileY = y;
-						td.map = this;
-					}								
-				}
-			}	
-		}
 	}
 
 	void GenerateMapData(){
@@ -88,6 +52,7 @@ public class TileMap : MonoBehaviour {
 		//Setting the tile type of all tiles
 		//0 = GRASS
 		//1 = ROAD
+		//2 = LIGHTS
 		for(int x = 0; x < mapSizeX; x++){
 			for(int y = 0; y < mapSizeY; y++){
 				tiles[x,y] = 0;
@@ -157,6 +122,7 @@ public class TileMap : MonoBehaviour {
 				TileType tt = tileTypes[tiles[x,y]];
 
 				tilesGrid[x,y] = (GameObject) Instantiate(tt.tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
+				tilesGrid[x,y].transform.SetParent(gameObject.transform);
 
 				//tilesGrid[x,y] = (GameObject) Instantiate(tt.tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
 				//Setting variables for the road placement script
@@ -279,13 +245,19 @@ public class TileMap : MonoBehaviour {
 	}
 	
 	public void PlaceTile(int x, int y, int type){
+
+		if(type == 3){
+			return;
+		}
+
 		tiles[x, y] = type;
 
 		//Destroys tile in that position and creates a new one of the new type
 		TileType tt = tileTypes[tiles[x,y]];
 		Destroy (tilesGrid [x, y]);
 		tilesGrid [x, y] = (GameObject)Instantiate (tt.tilePrefab, new Vector3 (x, 0, y), Quaternion.identity);
-		
+		tilesGrid[x,y].transform.SetParent(gameObject.transform);
+
 		//Sets values on the tile
 		RoadPlacement rp = tilesGrid[x,y].GetComponent<RoadPlacement>();
 		rp.tileX = x;

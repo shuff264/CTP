@@ -122,6 +122,7 @@ public class TileMap : MonoBehaviour {
 				TileType tt = tileTypes[tiles[x,y]];
 
 				tilesGrid[x,y] = (GameObject) Instantiate(tt.tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
+				tilesGrid[x,y].transform.SetParent(gameObject.transform);
 
 				//tilesGrid[x,y] = (GameObject) Instantiate(tt.tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
 				//Setting variables for the road placement script
@@ -255,7 +256,8 @@ public class TileMap : MonoBehaviour {
 		TileType tt = tileTypes[tiles[x,y]];
 		Destroy (tilesGrid [x, y]);
 		tilesGrid [x, y] = (GameObject)Instantiate (tt.tilePrefab, new Vector3 (x, 0, y), Quaternion.identity);
-		
+		tilesGrid[x,y].transform.SetParent(gameObject.transform);
+
 		//Sets values on the tile
 		RoadPlacement rp = tilesGrid[x,y].GetComponent<RoadPlacement>();
 		rp.tileX = x;
