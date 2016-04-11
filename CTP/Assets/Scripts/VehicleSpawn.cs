@@ -8,7 +8,6 @@ public class VehicleSpawn : MonoBehaviour {
 	int randomX;
 	int randomY;
 
-	public GameObject car;
 	public TileMap tm;
 
 	void Start () {
