@@ -128,9 +128,17 @@ public class UIController : MonoBehaviour {
 		for(int i = 0; i < TileMap.instance.mapSizeX; i++){
 			for(int j = 0; j < TileMap.instance.mapSizeY; j++){ //4 9 14 19
 				if(i == 4 || i == 9 || i == 14 || i == 19){
-					TileMap.instance.PlaceTile(i, j, 1);
+					if(j == 4 || j == 9 || j == 14 || j == 19){
+						TileMap.instance.PlaceTile(i, j, 2);
+					} else {
+						TileMap.instance.PlaceTile(i, j, 1);
+					}
 				} else if(j == 4 || j == 9 || j == 14 || j == 19){
-					TileMap.instance.PlaceTile(i, j, 1);
+					if(i == 4 || i == 9 || i == 14 || i == 19){
+						TileMap.instance.PlaceTile(i, j, 2);
+					} else {
+						TileMap.instance.PlaceTile(i, j, 1);
+					}
 				}
 
 			}
