@@ -25,7 +25,7 @@ public class CameraMovement : MonoBehaviour {
 		
 		if (Input.GetButton("Fire2")) {
 
-			float h =  Input.GetAxis("Mouse X"); //TODO: Works but might be a bit slow and may need refining. A bit janky.
+			float h =  Input.GetAxis("Mouse X");
 			float v =  Input.GetAxis("Mouse Y");
 			v = -v;
 			transform.Rotate(v, h, 0);
