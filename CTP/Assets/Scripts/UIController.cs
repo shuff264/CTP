@@ -18,6 +18,16 @@ public class UIController : MonoBehaviour {
 	public GameObject dijkstraButton;
 	public GameObject astarButton;
 
+	public Text dijkstraText;
+	public Text aStarText;
+
+	int aStarCount = 0;
+	int aStarSum = 0;
+	int aStarAvg = 0;
+
+	int dijkstraCount = 0;
+	int dijkstraSum = 0;
+	int dijkstraAvg = 0;
 
 	//Getting the button component from the button objects
 	Button buttonN;
@@ -109,6 +119,33 @@ public class UIController : MonoBehaviour {
 		TileMap.instance.searchType = SearchTypes.AStar;		
 		buttonD.interactable = true;
 		buttonA.interactable = false;
+	}
+
+	public void UpdateNodeText(int nodes, SearchTypes type){
+
+		switch (type){
+		case SearchTypes.AStar:
+			aStarCount++;
+			aStarSum += nodes;
+			aStarAvg = aStarSum/aStarCount;
+
+			aStarText.text = "A* Average Nodes Tested: " + aStarAvg;
+			break;
+			
+		case SearchTypes.Dijkstra:
+			dijkstraCount++;
+			dijkstraSum += nodes;
+			dijkstraAvg = dijkstraSum/dijkstraCount;
+
+			dijkstraText.text = "Dijkstra Average Nodes Tested: " + dijkstraAvg;
+			break;
+			
+		default:
+			Debug.Log("PROBLEM");
+			break;
+			
+		}
+
 	}
 
 }

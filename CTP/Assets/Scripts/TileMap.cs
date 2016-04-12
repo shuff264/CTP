@@ -29,6 +29,10 @@ public class TileMap : MonoBehaviour {
 	public int mapSizeX = 25;
 	public int mapSizeY = 25;
 
+	int nodesChecked = 0;
+
+	SearchTypes typeAtSearchTime;
+
 	void Start() {
 		instance = this;
 
@@ -139,6 +143,8 @@ public class TileMap : MonoBehaviour {
 
 	public List<Node> PathFinder(int startX, int startY, int endX, int endY){
 
+		typeAtSearchTime = searchType;
+
 		//Creating dictionaries to hold pathfinding data
 		//dist holds the distance between nodes as a float
 		//prev holds the node and the node before it
@@ -200,15 +206,20 @@ public class TileMap : MonoBehaviour {
 			foreach(Node v in u.neighbours){
 				if(MovementAllowed(v.x, v.y)){
 					float temp = 0;
-					if(searchType == SearchTypes.Dijkstra){
+
+					switch (typeAtSearchTime){
+					case SearchTypes.AStar:
+						temp = dist[u] + u.DistanceTo(v) + + v.DistanceTo(endPosition) + CostToEnterTile(v.x, v.y);
+						break;
+
+					case SearchTypes.Dijkstra:
 						temp = dist[u] + u.DistanceTo(v) + CostToEnterTile(v.x, v.y);
-					}
-					else if (searchType == SearchTypes.AStar){
-						temp = dist[u] + u.DistanceTo(v) + v.DistanceTo(endPosition) + CostToEnterTile(v.x, v.y);
-						
-					}
-					else {
+						break;
+
+					default:
 						Debug.Log("PROBLEM");
+						break;
+
 					}
 
 					if(temp < dist[v]){
@@ -217,13 +228,18 @@ public class TileMap : MonoBehaviour {
 					}
 				}
 			}
+
+			nodesChecked++;
 		}
+
+
 
 		//Actual filling out of path as a list begins
 		currentPath = new List<Node>();
 
 		//If there is no possible route, return null
 		if(prev[endPosition] == null){
+			nodesChecked = 0;
 			return currentPath = null;
 		}
 
@@ -240,6 +256,9 @@ public class TileMap : MonoBehaviour {
 		//Reverses the path as currently it is running from end to start
 		currentPath.Reverse();
 
+		UIController.instance.UpdateNodeText (nodesChecked, typeAtSearchTime);
+		nodesChecked = 0;
+
 		//Returns the path for the vehicle to use
 		return currentPath;
 	}
@@ -251,7 +270,7 @@ public class TileMap : MonoBehaviour {
 		}
 
 		tiles[x, y] = type;
-
+	
 		//Destroys tile in that position and creates a new one of the new type
 		TileType tt = tileTypes[tiles[x,y]];
 		Destroy (tilesGrid [x, y]);
@@ -269,6 +288,7 @@ public class TileMap : MonoBehaviour {
 		td.tileX = x;
 		td.tileY = y;
 		td.map = this;
+
 
 	}
 }
