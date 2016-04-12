@@ -10,7 +10,7 @@ public class Vehicle : MonoBehaviour {
 	public GameObject arrow; //Arrow pointer object
 	public List<Node> currentPath = null; //Vehicle path
 	public Vector3 endPosition; //Target destination
-	public float speed = 0.1f; //Speed of vehicle
+	public float speed = 0.3f; //Speed of vehicle
 	public LineRenderer lr; //Line renderer component
 
 	int randomX; //Random value to decide goal
@@ -151,7 +151,7 @@ public class Vehicle : MonoBehaviour {
 		//Speed is influenced by; max speed, acceleration, whether they are turning, traffic lights, vehicles that are in front
 
 		//Calculates a new speed value based on many different factors. If its below 0, set it to 0
-		if((speed += (Accelerate() + Turning() + Distance(distanceRay))) <0){
+		if((speed += (Accelerate() + Turning() + Distance(distanceRay))) <0.2){
 			speed = 0;
 		}else{
 			speed += (Accelerate() + Turning() + Distance(distanceRay));
