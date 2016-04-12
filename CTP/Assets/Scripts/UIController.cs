@@ -17,6 +17,7 @@ public class UIController : MonoBehaviour {
 	public GameObject lightsButton;
 	public GameObject dijkstraButton;
 	public GameObject astarButton;
+	public GameObject mapButton;
 
 	public Text dijkstraText;
 	public Text aStarText;
@@ -36,6 +37,7 @@ public class UIController : MonoBehaviour {
 	Button buttonL;
 	Button buttonD;
 	Button buttonA;
+	Button buttonM;
 
 	//Getting the sliiders
 	public Slider spawnRateSlider;
@@ -52,6 +54,7 @@ public class UIController : MonoBehaviour {
 		buttonD = dijkstraButton.GetComponent<Button>();
 		buttonA = astarButton.GetComponent<Button>();
 		buttonN = noneButton.GetComponent<Button>();
+		buttonM = mapButton.GetComponent<Button>();
 
 		//Setting initial values
 		buttonN.interactable = false;
@@ -119,6 +122,20 @@ public class UIController : MonoBehaviour {
 		TileMap.instance.searchType = SearchTypes.AStar;		
 		buttonD.interactable = true;
 		buttonA.interactable = false;
+	}
+
+	public void OnClickMap(){
+		for(int i = 0; i < TileMap.instance.mapSizeX; i++){
+			for(int j = 0; j < TileMap.instance.mapSizeY; j++){ //4 9 14 19
+				if(i == 4 || i == 9 || i == 14 || i == 19){
+					TileMap.instance.PlaceTile(i, j, 1);
+				} else if(j == 4 || j == 9 || j == 14 || j == 19){
+					TileMap.instance.PlaceTile(i, j, 1);
+				}
+
+			}
+		}
+
 	}
 
 	public void UpdateNodeText(int nodes, SearchTypes type){
