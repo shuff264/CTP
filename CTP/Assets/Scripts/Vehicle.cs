@@ -10,8 +10,14 @@ public class Vehicle : MonoBehaviour {
 	public GameObject arrow; //Arrow pointer object
 	public List<Node> currentPath = null; //Vehicle path
 	public Vector3 endPosition; //Target destination
-	public float speed = 0.3f; //Speed of vehicle
+	public float speed = 0.0f; //Speed of vehicle
 	public LineRenderer lr; //Line renderer component
+
+	//TODO: REMOVE THESE
+	public float turningReturn;
+	public float accelerationReturn;
+	public float rayCastReturn;
+	public float totalSpeed;
 
 	int randomX; //Random value to decide goal
 	int randomY; //Random value to decide goal
@@ -19,7 +25,7 @@ public class Vehicle : MonoBehaviour {
 	float startTime; //Starting time of the lerp
 	float journeyLength; //Total length for the vehicle to travel
 	float maxSpeed = 0; //Max speed decided by the tile it is on
-	float acceleration = 0.2f; //Rate of change of speed
+	float acceleration = 0.4f; //Rate of change of speed
 	float timeNotMoved = 0f; //Total time since the vehicle last moved
 	float respawnTime = 10f; //Max amount of time a vehicle can not move for before it is despawned
 	Vector3 lastPosition; //Position of the vehicle last frame
@@ -101,7 +107,7 @@ public class Vehicle : MonoBehaviour {
 		gameObject.transform.position = Vector3.Lerp (new Vector3(currentPath[0].x, 0, currentPath[0].y), new Vector3 (currentPath[1].x, 0, currentPath[1].y), fracJourney);
 
 		//If a vehicle is moving, carrying out rotation. Prevents problems when look rotation is 0
-		if(speed > 0){
+		if(speed > 0.1){
 			RotateVehicle();
 		}
 		//If the vehicle is at the next node in the path, reset the start time and remove the node from the path
@@ -150,9 +156,16 @@ public class Vehicle : MonoBehaviour {
 	void AdjustSpeed(Ray distanceRay){
 		//Speed is influenced by; max speed, acceleration, whether they are turning, traffic lights, vehicles that are in front
 
+		accelerationReturn = Accelerate ();
+		turningReturn = Turning ();
+		rayCastReturn = Distance (distanceRay);
+
+		totalSpeed += accelerationReturn + turningReturn + rayCastReturn;
+
+
 		//Calculates a new speed value based on many different factors. If its below 0, set it to 0
-		if((speed += (Accelerate() + Turning() + Distance(distanceRay))) <0.2){
-			speed = 0;
+		if((speed += (Accelerate() + Turning() + Distance(distanceRay))) <0f){
+			speed = 0.0f;
 		}else{
 			speed += (Accelerate() + Turning() + Distance(distanceRay));
 		}
@@ -230,7 +243,7 @@ public class Vehicle : MonoBehaviour {
 
 		//Look rotation turns the vehicle to face the next node
 		targetRotation = Quaternion.LookRotation(new Vector3(currentPath[0].x, 0, currentPath[0].y) - transform.position);
-		float str = Mathf.Min ((speed * 5) * Time.deltaTime, 1);
+		float str = Mathf.Min ((speed * 2) * Time.deltaTime, 1);
 
 		//Setting the rotation of the vehicle
 		transform.rotation = Quaternion.Lerp (transform.rotation, targetRotation, str);	
