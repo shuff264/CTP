@@ -3,21 +3,24 @@ using System.Collections;
 
 public class TrafficLights : MonoBehaviour {
 
+	//Two bools to control the two directions of travel
 	public bool xGreen;
 	public bool zGreen;
 
+	//Total time the lights have been on a certain direction
 	float timeOnGreen;
 	float timePassedOnGreen = 0f;
 
-	// Use this for initialization
+	//Randomly generates the time it takes to change
+	//Randomly selects which direction is on green (UP/DOWN OR LEFT/RIGHT)
 	void Awake () {
-		timeOnGreen = Random.Range(5, 15);
+		timeOnGreen = Random.Range(2f, 6f);
 		xGreen = returnBoolean();
 		zGreen = !xGreen;
 
 	}
 	
-	// Update is called once per frame
+	//When enough time is elapsed the directions switch
 	void Update () {
 		if(timePassedOnGreen >= timeOnGreen){
 			xGreen = !xGreen;
@@ -28,6 +31,7 @@ public class TrafficLights : MonoBehaviour {
 		timePassedOnGreen += Time.deltaTime;
 	}
 
+	//Returns a random boolean
 	bool returnBoolean(){
 
 		return (Random.value > 0.5f);

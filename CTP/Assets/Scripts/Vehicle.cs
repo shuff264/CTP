@@ -13,12 +13,6 @@ public class Vehicle : MonoBehaviour {
 	public float speed = 0.0f; //Speed of vehicle
 	public LineRenderer lr; //Line renderer component
 
-	//TODO: REMOVE THESE
-	public float turningReturn;
-	public float accelerationReturn;
-	public float rayCastReturn;
-	public float totalSpeed;
-
 	int randomX; //Random value to decide goal
 	int randomY; //Random value to decide goal
 	float lastRot; //The rotation of the vehicle during the last frame
@@ -90,8 +84,11 @@ public class Vehicle : MonoBehaviour {
 
 	//Handles the movement of the vehicle
 	public void VehicleMovement(){
-		//TODO: Add summary about how force movement was going to be a thing but it didnt
-		//TODO: Add overall summaries to each major area to describe what is happening
+		//This vehicle movement is still incredibly basic
+		//Also causes a weird visual glitch some times
+		//This has attempted to be fixed however still apears some times
+		//It is most commonly seen at traffic lights when a vehicle will stutter back and forth
+
 		//Catches any vehicles that havent been destoryed when they should have been
 		if(currentPath == null){
 			DestroyVehicle();
@@ -135,14 +132,13 @@ public class Vehicle : MonoBehaviour {
 
 	void CheckIfMoved(){
 		//Checks the current position against the last position, if they are the same add to the timer if not set it to 0
-//		if(lastPosition != null){
-			if(gameObject.transform.position == lastPosition){
-				timeNotMoved += Time.deltaTime;
-			}
-			else {
-				timeNotMoved = 0f;
-			}
-		//}
+
+		if(gameObject.transform.position == lastPosition){
+			timeNotMoved += Time.deltaTime;
+		}
+		else {
+			timeNotMoved = 0f;
+		}
 
 		//If its not moved for too long, destroy it
 		if (timeNotMoved > respawnTime) {
@@ -155,14 +151,7 @@ public class Vehicle : MonoBehaviour {
 
 	void AdjustSpeed(Ray distanceRay){
 		//Speed is influenced by; max speed, acceleration, whether they are turning, traffic lights, vehicles that are in front
-
-		accelerationReturn = Accelerate ();
-		turningReturn = Turning ();
-		rayCastReturn = Distance (distanceRay);
-
-		totalSpeed += accelerationReturn + turningReturn + rayCastReturn;
-
-
+	
 		//Calculates a new speed value based on many different factors. If its below 0, set it to 0
 		if((speed += (Accelerate() + Turning() + Distance(distanceRay))) <0f){
 			speed = 0.0f;

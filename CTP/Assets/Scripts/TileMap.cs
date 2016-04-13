@@ -264,11 +264,18 @@ public class TileMap : MonoBehaviour {
 	}
 	
 	public void PlaceTile(int x, int y, int type){
+		//This place tile function, whilst it works, needs rewriting.
+		//There is no need to destroy and recreate tiles each time they are placed
+		//Instead simple change the tile type and call a function to update the texture
+		//This should be entirely changed to accomodate free form roads
+		//Free form roads would instead be place on top of a clear map
 
+		//Catches when the placement is type of none and breaks before anything is done
 		if(type == 3){
 			return;
 		}
 
+		//Setting the type of the tile
 		tiles[x, y] = type;
 	
 		//Destroys tile in that position and creates a new one of the new type

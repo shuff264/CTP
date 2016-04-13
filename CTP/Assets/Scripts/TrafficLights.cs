@@ -3,9 +3,11 @@ using System.Collections;
 
 public class TrafficLights : MonoBehaviour {
 
+	//Two bools to control the two directions of travel
 	public bool xGreen;
 	public bool zGreen;
 
+	//Total time the lights have been on a certain direction
 	float timeOnGreen;
 	float timePassedOnGreen = 0f;
 
@@ -29,6 +31,7 @@ public class TrafficLights : MonoBehaviour {
 		timePassedOnGreen += Time.deltaTime;
 	}
 
+	//Returns a random boolean
 	bool returnBoolean(){
 
 		return (Random.value > 0.5f);

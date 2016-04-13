@@ -4,7 +4,9 @@ using System.Collections.Generic;
 
 public class CameraMovement : MonoBehaviour {
 
+	//Rigidbody attached to camera to allow for forces to be applied
 	Rigidbody rb;
+	//The height of the camera changed by the scroll wheel axis
 	float height;
 
 	void Start () {
@@ -16,7 +18,7 @@ public class CameraMovement : MonoBehaviour {
 		//Utilises the input manager to control the camera
 		//Arrow keys to love it laterally
 		//Scroll wheel to go up and down
-		//Mouse axis used to aim camera - its a bit weird atm
+		//Mouse axis used to aim camera
 		float forwardMovement = Input.GetAxis ("Vertical");
 		float sidewaysMovement = Input.GetAxis ("Horizontal");
 		Vector3 movement = new Vector3 (sidewaysMovement * 10, 0, forwardMovement * 10);

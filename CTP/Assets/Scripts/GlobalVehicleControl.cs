@@ -16,11 +16,6 @@ public class GlobalVehicleControl : MonoBehaviour {
 	void Start () {
 		instance = this;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
 
 	//On button press sets all the draw debug variables to true or false depending on where it is already enabled or not
 	public void DrawDebug(){

@@ -8,6 +8,7 @@ public class UIController : MonoBehaviour {
 
 	public static UIController instance;
 
+	//Setting the base place type to none
 	public int placeType = 3;
 
 	//Getting all the button objects
@@ -19,9 +20,13 @@ public class UIController : MonoBehaviour {
 	public GameObject astarButton;
 	public GameObject mapButton;
 
+	//Getting all the text objects
 	public Text dijkstraText;
 	public Text aStarText;
 
+	//Integer values to hold the amount of nodes checked by each algorithm
+	//As well as this how many vehicles have used the algorithm
+	//Uses these variables to calculate an average to be displayed
 	int aStarCount = 0;
 	int aStarSum = 0;
 	int aStarAvg = 0;
@@ -37,14 +42,13 @@ public class UIController : MonoBehaviour {
 	Button buttonL;
 	Button buttonD;
 	Button buttonA;
-	Button buttonM;
 
 	//Getting the sliiders
 	public Slider spawnRateSlider;
 	public Slider gameSpeedSlider;
 
 
-	// Use this for initialization
+	//Getting all the button components and setting there base interactabilities
 	void Start () {
 		instance = this;
 
@@ -54,8 +58,7 @@ public class UIController : MonoBehaviour {
 		buttonD = dijkstraButton.GetComponent<Button>();
 		buttonA = astarButton.GetComponent<Button>();
 		buttonN = noneButton.GetComponent<Button>();
-		buttonM = mapButton.GetComponent<Button>();
-
+	
 		//Setting initial values
 		buttonN.interactable = false;
 		buttonG.interactable = true;
@@ -67,13 +70,18 @@ public class UIController : MonoBehaviour {
 		
 		spawnRateSlider.value = 100.0f;
 		gameSpeedSlider.value = 1.0f;
-
+		placeType = 3;
 	}
 
 	// Update is called once per frame
 	void Update () {
 		//Update using the gameSPeedSlider to control the tick rate of the game
 		Time.timeScale = gameSpeedSlider.value;
+
+		if(Input.GetButton("Cancel")){
+			Quit();
+			Debug.Log("Quit");
+		}
 	}
 
 	//OnClick functions for all of the buttons
@@ -124,6 +132,8 @@ public class UIController : MonoBehaviour {
 		buttonA.interactable = false;
 	}
 
+	//Button function to create the example map
+	//Creates a simple grid patern based off a series of variables
 	public void OnClickMap(){
 		for(int i = 0; i < TileMap.instance.mapSizeX; i++){
 			for(int j = 0; j < TileMap.instance.mapSizeY; j++){ //4 9 14 19
@@ -139,13 +149,25 @@ public class UIController : MonoBehaviour {
 					} else {
 						TileMap.instance.PlaceTile(i, j, 1);
 					}
+				} else {
+					TileMap.instance.PlaceTile(i, j, 0);
 				}
+
 
 			}
 		}
 
 	}
 
+	public void Quit(){
+		Application.Quit();
+		Debug.Log("Quit");
+	}
+
+	//Updates the node average text based upon new values
+	//This function is called at the end of the path finding 
+	//Passes in how many nodes that path finding took as well as the type of algorithm
+	//These values are then used to update the on screen average
 	public void UpdateNodeText(int nodes, SearchTypes type){
 
 		switch (type){
